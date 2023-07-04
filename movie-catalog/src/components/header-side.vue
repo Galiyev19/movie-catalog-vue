@@ -1,26 +1,28 @@
 <template>
   <div class="header">
-    <img class="logo" src="@/assets/images/logo.png" />
+    <router-link to="/home">
+      <img class="logo" src="@/assets/images/logo.svg" />
+    </router-link>
     <nav class="menu">
       <router-link
-        to="/"
+        to="/home"
         class="text-white font-bold text-3xl hover:text-red-700 mx-2"
-        >Главная</router-link
+        >Home</router-link
       >
       <router-link
         to="/category"
         class="text-white font-bold text-3xl hover:text-red-700 mx-2"
-        >Категории</router-link
+        >TV Serials</router-link
       >
       <router-link
         to="/"
         class="text-white font-bold text-3xl hover:text-red-700 mx-2"
-        >Сериалы</router-link
+        >Actors</router-link
       >
     </nav>
-    <input placeholder="Искать" class="search_input" />
+    <input placeholder="Search" class="search_input" />
     <div>
-      <h2 class="text-white">Аккаунт</h2>
+      <h2 class="text-white">Account</h2>
     </div>
   </div>
 </template>
@@ -33,8 +35,10 @@
   align-items: center;
   width: 100%;
   padding: 32px 5%;
-  border-bottom: 1px solid white;
+  /* border-bottom: 1px solid white; */
   justify-content: space-between;
+  position: absolute;
+  z-index: 100;
 }
 
 .menu {
@@ -46,6 +50,7 @@
 .logo {
   height: 60px;
   width: 80px;
+  cursor: pointer;
 }
 
 .search_input {
@@ -55,5 +60,17 @@
   font-size: 18px;
   padding: 8px 6px;
   width: 45%;
+  background: rgba(0, 0, 0, 0);
+  outline: none;
+  border: 1px solid white;
+  color: white;
+}
+
+.search_input::placeholder {
+  color: white;
+}
+
+.search_input:focus {
+  border: 1px solid cyan;
 }
 </style>
