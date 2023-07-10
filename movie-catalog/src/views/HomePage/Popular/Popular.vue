@@ -1,15 +1,15 @@
 <template lang="">
   <div class="main">
     <div class="card_container scroll-smooth overflow-x-auto" id="content">
-      <card-item v-for="item in movies" :movie="item" />
+      <card-item v-for="item in movies" :movie="item" :key="item.id" />
     </div>
     <button class="text-white btn-carousel right" @click="next">
-      <font-awesome-icon icon="chevron-right" class="text-white text-5xl" />
+      <font-awesome-icon icon="chevron-right" class="text-white text-8xl" />
     </button>
     <button class="btn-carousel left" @click="prev">
       <font-awesome-icon
         icon="fa-solid fa-chevron-left"
-        class="text-white text-5xl"
+        class="text-white text-8xl"
       />
     </button>
   </div>
@@ -18,29 +18,25 @@
 import apiMovies from "@/api/api-movies";
 import CardItem from "./CardItem.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { Pagination } from "swiper/modules";
+
 export default {
   name: "popular",
   components: { CardItem, Swiper, SwiperSlide },
   data() {
     return {
       movies: [],
-      modules: [Pagination],
       genres: [],
     };
   },
   methods: {
     async getData() {
-      const res = await apiMovies.getPopulaMovieSerialsTV();
-      console.log(res.results);
-      const temp = [];
-      res.results.map((item) => temp.push(item.genre_ids));
-      console.log(temp);
+      const res = await apiMovies.getPopulaMovie();
+      // console.log(res.results);
       this.movies = res.results;
     },
     async getGenres() {
       const res = await apiMovies.getGenres();
-      console.log(res);
+      this.genres = res;
     },
     next() {
       document.getElementById("content").scrollLeft += 700;
@@ -73,14 +69,9 @@ export default {
   top: calc(150% - 25px);
 }
 
-.btn-carousel:focus {
-  color: red;
-}
-
 .left {
   left: 6%;
 }
-
 .right {
   right: 6%;
 }

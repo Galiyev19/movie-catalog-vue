@@ -10,7 +10,7 @@
         >Home</router-link
       >
       <router-link
-        to="/category"
+        to="/tv_serials"
         class="text-white font-bold text-3xl hover:text-red-700 mx-2"
         >TV Serials</router-link
       >

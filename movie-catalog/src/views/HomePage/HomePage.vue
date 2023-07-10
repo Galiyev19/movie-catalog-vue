@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <div class="carousel">
     <div class="container_slider">
       <carousel-item
@@ -25,22 +25,32 @@
   <div class="popular">
     <div class="flex w-full justify-between items-end">
       <h2 class="text-8xl text-white">Featured Movie</h2>
-      <h2 class="text-4xl text-red-600 cursor-pointer">
+      <h2 class="text-4xl text-red-600 cursor-pointer hover:text-white">
         See more <font-awesome-icon icon="chevron-right" />
       </h2>
     </div>
     <popular />
   </div>
+  <div class="serials">
+    <div class="flex w-full justify-between items-end">
+      <h2 class="text-8xl text-white">TV Serials</h2>
+      <h2 class="text-4xl text-red-600 cursor-pointer hover:text-white">
+        See more <font-awesome-icon icon="chevron-right" />
+      </h2>
+    </div>
+    <serial-slider />
+  </div>
 </template>
 
 <script>
 import apiMovies from "../../api/api-movies";
-import CarouselItem from "./CarouselItem.vue";
+import CarouselItem from "../TVSerials/CarouselItem.vue";
 import Popular from "./Popular/Popular.vue";
+import SerialSlider from "./SerialsSlider/SerialsSlider.vue";
 
 export default {
   name: "Home",
-  components: { CarouselItem, Popular },
+  components: { CarouselItem, Popular, SerialSlider },
   data() {
     return {
       currentSlide: 0,
@@ -52,6 +62,7 @@ export default {
   methods: {
     async getData() {
       const res = await apiMovies.getNowPlayingMovie();
+      // console.log(res);
       this.movies = res.results;
     },
     setCurrentSlide(index) {
@@ -84,13 +95,14 @@ export default {
 };
 </script>
 <style>
+body {
+  background-color: #232323;
+}
+
 .icon_size {
   font-size: 20px;
 }
 
-body {
-  background-color: #232323;
-}
 .home {
   display: flex;
   flex-direction: column;
@@ -128,6 +140,13 @@ body {
 }
 
 .popular {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 3% 5%;
+}
+
+.serials {
   display: flex;
   flex-direction: column;
   width: 100%;

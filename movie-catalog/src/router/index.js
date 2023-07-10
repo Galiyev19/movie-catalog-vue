@@ -2,9 +2,9 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import SignIn from "../views/Sign-In.vue";
 import SignUp from "../views/Sign-Up.vue";
-import Category from "../views/HomePage/Category.vue";
 import HomePage from "../views/HomePage/HomePage.vue";
 import MovieDeatail from "../views/MovieDetail/MovieDetail.vue";
+import TVSerials from "../views/TVSerials/TVSerials.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,9 +20,9 @@ const router = createRouter({
           component: HomePage,
         },
         {
-          path: "/category",
-          name: "category",
-          component: Category,
+          path: "/tv_serials",
+          name: "tv_serials",
+          component: TVSerials,
         },
         {
           path: "/home/:title",

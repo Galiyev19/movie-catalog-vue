@@ -1,6 +1,6 @@
 <template>
   <div class="card" @mouseover="showBtn = true" @mouseleave="showBtn = false">
-    <img :src="url + movie.poster_path" alt="poster" class="" />
+    <img :src="url + movie.poster_path" alt="poster" class="h-100" />
     <div class="flex w-full flex-col">
       <h2 class="text-white text-3xl font-bold my-2">
         {{ movie.title || movie.name }}
@@ -13,13 +13,18 @@
         <font-awesome-icon icon="heart" class="text-4xl icon" />
       </div>
     </div>
-    <router-link :to="`/home/${movie.title || movie.name}`" class="btn_more"
+    <router-link
+      :to="`/home/${movie.title || movie.name}`"
+      class="btn_more"
+      @click="selectMovieId(movie.id)"
       >More detail</router-link
     >
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "card-item",
   data() {
@@ -28,7 +33,11 @@ export default {
       showBtn: false,
     };
   },
-  props: ["movie"],
+  props: ["movie", "genres"],
+  methods: {
+    ...mapActions(["selectMovieId"]),
+  },
+  created() {},
 };
 </script>
 
@@ -39,6 +48,7 @@ export default {
   min-width: 30%;
   margin-right: 30px;
   transition: 0.3s;
+  justify-content: space-between;
 }
 
 .card:hover {
@@ -73,5 +83,9 @@ export default {
 .btn_more:hover {
   border-color: red;
   color: red;
+}
+
+.card_img_h {
+  min-height: 300px;
 }
 </style>
