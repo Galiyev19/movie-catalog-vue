@@ -6,50 +6,93 @@
     }) `"
   >
     <h1 class="text-white font-bold text-8xl mb-2">
-      {{ movieDetail.title }}
+      {{ movieDetail.title || movieDetail.name }}
     </h1>
-    <div class="video_player">
+    <div class="video_player" v-if="video.length > 0">
       <vue-plyr>
         <div
           data-plyr-provider="youtube"
-          :data-plyr-embed-id="video[0]?.key"
+          :data-plyr-embed-id="video[0].key"
         ></div>
       </vue-plyr>
     </div>
-    <div class="flex my-9">
-      <p class="text-white font-bold text-4xl">
+    <div class="flex flex-col my-9 w-full">
+      <span class="text-white font-bold text-6xl mb-9">About movie</span>
+      <p class="text-white font-bold text-4xl leading-9">
         {{ movieDetail.overview }}
       </p>
+      <div class="flex flex-col my-4">
+        <p class="text-2xl text-red-500 my-4" v-if="this.director.length !== 0">
+          Director:
+          <span
+            class="text-white underline cursor-pointer"
+            v-for="item in director"
+            :key="item.id"
+            >{{ item.original_name }}</span
+          >
+        </p>
+        <p class="text-2xl text-red-500">
+          Genres:
+          <span
+            v-for="genres in movieDetail.genres"
+            :key="genres.id"
+            class="text-white underline mx-0.5"
+          >
+            {{ genres.name }}
+          </span>
+        </p>
+        <div class="flex text-2xl text-red-500 my-4">
+          Rating:
+          <div class="flex">
+            <span class="text-white underline mx-2"
+              >{{ Math.trunc(movieDetail.vote_average * 10) / 10 }}
+            </span>
+            <img src="@/assets/images/imdb.svg" class="imdb_img" />
+          </div>
+        </div>
+        <p class="text-2xl text-red-500">
+          Original language:
+          <span class="text-white underline">{{
+            movieDetail.original_language?.toUpperCase()
+          }}</span>
+        </p>
+      </div>
+    </div>
+    <div class="flex flex-col w-full my-2">
+      <h2 class="text-white text-6xl font-bold">Top Cast</h2>
+      <actor-list />
     </div>
   </div>
 </template>
 <script>
 import apiMovies from "../../api/api-movies";
-
+import ActorList from "./ActorList.vue";
 export default {
   name: "movie-detail",
-  components: {},
+  components: { ActorList },
   data() {
     return {
       url: "https://image.tmdb.org/t/p/original/",
       movieDetail: {},
       video: [],
+      director: [],
     };
   },
   methods: {
-    async getMovieDeatailById() {
-      const result = await apiMovies.getMovieDetailById(
-        this.$store.getters.movieId
-      );
-      this.movieDetail = result.data;
-    },
     async getMovieTrailer() {
-      const result = await apiMovies.getMovieTrailer(
-        this.$store.getters.movieId
-      );
+      const id = sessionStorage.getItem("id");
+      const mediaType = sessionStorage.getItem("media_type");
+
+      const result = await apiMovies.getMovieTrailer(id, mediaType);
       console.log(result);
       this.movieDetail = result;
       this.video = this.movieDetail.videos.results;
+    },
+    async getActors() {
+      const id = sessionStorage.getItem("id");
+      const media_type = sessionStorage.getItem("media_type");
+      const result = await apiMovies.getActorsList(id, media_type);
+      this.director = result.crew.filter((item) => item.job === "Director");
     },
     onReady() {
       this.$refs.youtube.playVideo();
@@ -59,6 +102,11 @@ export default {
   created() {
     // this.getMovieDeatailById();
     this.getMovieTrailer();
+    this.getActors();
+  },
+  computed() {
+    this.getMovieTrailer();
+    this.getActors();
   },
 };
 </script>

@@ -13,16 +13,16 @@ const options = {
 const apiMovies = {
   getNowPlayingMovie: async () => {
     try {
-      const response = await API.get("/3/movie/now_playing", options);
+      const response = await API.get(`/3/movie/now_playing`, options);
       return response.data;
     } catch (error) {
       console.log(error);
     }
   },
 
-  getPopulaMovie: async () => {
+  getPopulaMovie: async (optionName) => {
     try {
-      const response = await API.get("/3/trending/movie/day", options);
+      const response = await API.get(`/3/movie/${optionName}/`, options);
       return response.data;
     } catch (e) {
       console.log(e);
@@ -57,10 +57,10 @@ const apiMovies = {
     }
   },
 
-  getMovieTrailer: async (id) => {
+  getMovieTrailer: async (id, media_type) => {
     try {
       const response = await API.get(
-        `/3/movie/${id}?api_key=c0a4af2ca7697281b24b36262493a644&append_to_response=videos`
+        `/3/${media_type}/${id}?api_key=c0a4af2ca7697281b24b36262493a644&append_to_response=videos`
       );
       return response.data;
     } catch (e) {
@@ -68,22 +68,30 @@ const apiMovies = {
     }
   },
 
-  getPopularSerials: async () => {
+  getPopularSerials: async (optionName) => {
     try {
-      const response = await API.get("/3/tv/top_rated", options);
+      const response = await API.get(`/3/tv/${optionName}/`, options);
       return response.data;
     } catch (e) {
       console.log(e);
     }
   },
-  getSerialsTrailer: async (id) => {
+  getSerialsTrailer: async (id, media_type) => {
     try {
       const response = await API.get(
-        `/3/tv/${id}?api_key=c0a4af2ca7697281b24b36262493a644&append_to_response=videos`
+        `/3/${media_type}/${id}?api_key=c0a4af2ca7697281b24b36262493a644&append_to_response=videos`
       );
       return response.data;
     } catch (e) {
       console.log(e);
+    }
+  },
+  getActorsList: async (id, media_type) => {
+    try {
+      const response = await API.get(`/3/${media_type}/${id}/credits`, options);
+      return response.data;
+    } catch (error) {
+      console.log(error);
     }
   },
 };

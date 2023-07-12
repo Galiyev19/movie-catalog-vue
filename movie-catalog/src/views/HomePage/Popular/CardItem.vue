@@ -16,7 +16,7 @@
     <router-link
       :to="`/home/${movie.title || movie.name}`"
       class="btn_more"
-      @click="selectMovieId(movie.id)"
+      @click="onClickMoreDetail(movie.id, this.media_type)"
       >More detail</router-link
     >
   </div>
@@ -33,9 +33,12 @@ export default {
       showBtn: false,
     };
   },
-  props: ["movie", "genres"],
+  props: ["movie", "genres", "media_type"],
   methods: {
-    ...mapActions(["selectMovieId"]),
+    ...mapActions(["selectMovieId", "setMediaType"]),
+    onClickMoreDetail(id, media_type) {
+      this.selectMovieId(id), this.setMediaType(media_type);
+    },
   },
   created() {},
 };

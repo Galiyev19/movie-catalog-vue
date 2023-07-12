@@ -16,7 +16,7 @@
       <router-link
         :to="`/home/${movie.original_title}`"
         class="more_info_btn text-2xl"
-        @click="selectMovieId(movie.id)"
+        @click="onClickMoreDetail(movie.id, this.media_type)"
         >More</router-link
       >
     </div>
@@ -30,10 +30,14 @@ export default {
   data() {
     return {
       url: "https://image.tmdb.org/t/p/original",
+      media_type: "movie",
     };
   },
   methods: {
     ...mapActions(["selectMovieId"]),
+    onClickMoreDetail(id, media_type) {
+      this.selectMovieId(id), this.setMediaType(media_type);
+    },
   },
 };
 </script>

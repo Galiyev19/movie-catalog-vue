@@ -1,10 +1,28 @@
 <template>
   <div class="main">
+    <div class="flex w-full items-start my-4">
+      <button
+        class="more_info_btn text-3xl mr-4"
+        v-for="option in options"
+        :key="option.id"
+        @click="changeOption(option.value)"
+        :class="{
+          currentOption: option.value === this.$store.getters.selectedOptionTV,
+        }"
+      >
+        {{ option.name }}
+      </button>
+    </div>
     <div
       class="card_container scroll-smooth overflow-x-auto"
       id="serial_content"
     >
-      <card-item v-for="item in serials" :movie="item" :key="item.id" />
+      <card-item
+        v-for="item in serials"
+        :movie="item"
+        :key="item.id"
+        :media_type="this.media_type"
+      />
     </div>
     <button class="text-white btn-carousel right" @click="next">
       <font-awesome-icon icon="chevron-right" class="text-white text-8xl" />
@@ -20,6 +38,7 @@
 <script>
 import apiMovies from "../../../api/api-movies";
 import CardItem from "../Popular/CardItem.vue";
+import { mapActions } from "vuex";
 
 export default {
   name: "serials-slider",
@@ -27,11 +46,19 @@ export default {
   data() {
     return {
       serials: [],
+      media_type: "tv",
+      options: [
+        { id: 1, name: "Top Rated", value: "top_rated" },
+        { id: 2, name: "Popular", value: "popular" },
+      ],
     };
   },
   methods: {
+    ...mapActions(["selectedOptionTV"]),
     async getPopularSerials() {
-      const result = await apiMovies.getPopularSerials();
+      const result = await apiMovies.getPopularSerials(
+        this.$store.getters.selectedOptionTV
+      );
       // console.log(result.results);
       this.serials = result.results;
     },
@@ -40,6 +67,10 @@ export default {
     },
     prev() {
       document.getElementById("serial_content").scrollLeft -= 700;
+    },
+    changeOption(name) {
+      this.selectedOptionTV(name);
+      this.getPopularSerials();
     },
   },
   created() {
@@ -62,7 +93,7 @@ export default {
 
 .btn-carousel {
   position: absolute;
-  top: calc(260% - 25px);
+  top: calc(270% - 25px);
 }
 
 .left {
@@ -70,6 +101,11 @@ export default {
 }
 .right {
   right: 6%;
+}
+
+.currentOption {
+  border-color: red;
+  color: red;
 }
 
 @media (max-width: 1680px) {

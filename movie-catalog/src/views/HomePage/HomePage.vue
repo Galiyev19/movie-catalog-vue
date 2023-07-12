@@ -90,8 +90,9 @@ export default {
     clearInterval(this.slideInterval);
   },
   created() {
-    this.getData();
+    this.getData(this.selectedOption);
   },
+  watch: {},
 };
 </script>
 <style>
