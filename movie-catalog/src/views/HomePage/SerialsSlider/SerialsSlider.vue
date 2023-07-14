@@ -63,10 +63,10 @@ export default {
       this.serials = result.results;
     },
     next() {
-      document.getElementById("serial_content").scrollLeft += 700;
+      document.getElementById("serial_content").scrollLeft += 500;
     },
     prev() {
-      document.getElementById("serial_content").scrollLeft -= 700;
+      document.getElementById("serial_content").scrollLeft -= 500;
     },
     changeOption(name) {
       this.selectedOptionTV(name);
@@ -86,6 +86,7 @@ export default {
 
 .card_container {
   display: flex;
+  position: relative;
   overflow: hidden;
   height: auto;
   margin-top: 16px;
@@ -93,7 +94,7 @@ export default {
 
 .btn-carousel {
   position: absolute;
-  top: calc(270% - 25px);
+  top: 270%;
 }
 
 .left {
@@ -108,21 +109,7 @@ export default {
   color: red;
 }
 
-@media (max-width: 1680px) {
-  .btn-carousel {
-    top: calc(250%);
-  }
-}
-
-@media (max-width: 1480px) {
-  .btn-carousel {
-    top: calc(230%);
-  }
-}
-
-@media (max-width: 1320px) {
-  .btn-carousel {
-    top: calc(225%);
-  }
+.btn-carousel {
+  display: none;
 }
 </style>

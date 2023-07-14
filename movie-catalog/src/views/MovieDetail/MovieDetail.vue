@@ -5,7 +5,9 @@
       url + movieDetail.backdrop_path || url + movie.poster_path
     }) `"
   >
-    <h1 class="text-white font-bold text-8xl mb-2">
+    <h1
+      class="text-white font-bold text-8xl mb-2 max-[992px]:text-6xl max-[768px]:text-4xl"
+    >
       {{ movieDetail.title || movieDetail.name }}
     </h1>
     <div class="video_player" v-if="video.length > 0">
@@ -36,7 +38,7 @@
           <span
             v-for="genres in movieDetail.genres"
             :key="genres.id"
-            class="text-white underline mx-0.5"
+            class="text-white underline mx-0.5 cursor-pointer"
           >
             {{ genres.name }}
           </span>
@@ -56,20 +58,35 @@
             movieDetail.original_language?.toUpperCase()
           }}</span>
         </p>
+        <p class="text-2xl text-red-500 my-4">
+          Release Date:
+          <span class="text-white underline">{{
+            movieDetail.release_date || movieDetail.first_air_date
+          }}</span>
+        </p>
+        <p class="text-2xl text-red-500 my-2">
+          Status:
+          <span class="text-white underline">{{ movieDetail.status }}</span>
+        </p>
       </div>
     </div>
     <div class="flex flex-col w-full my-2">
       <h2 class="text-white text-6xl font-bold">Top Cast</h2>
       <actor-list />
     </div>
+    <div class="flex flex-col w-full my-5">
+      <h2 class="text-white text-6xl font-bold my-5">Photos</h2>
+      <image-list class="my-10" />
+    </div>
   </div>
 </template>
 <script>
 import apiMovies from "../../api/api-movies";
 import ActorList from "./ActorList.vue";
+import ImageList from "./ImageList.vue";
 export default {
   name: "movie-detail",
-  components: { ActorList },
+  components: { ActorList, ImageList },
   data() {
     return {
       url: "https://image.tmdb.org/t/p/original/",

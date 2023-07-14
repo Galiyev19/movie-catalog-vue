@@ -1,8 +1,8 @@
 <template lang="">
   <div class="main">
-    <div class="flex w-full items-start my-4">
+    <div class="flex w-full flex-wrap items-start my-4">
       <button
-        class="more_info_btn text-3xl mr-4"
+        class="more_info_btn text-3xl mr-4 my-4"
         :class="{
           currentOption:
             option.value === this.$store.getters.selectedOptionMovie,
@@ -20,12 +20,14 @@
         :movie="item"
         :key="item.id"
         :media_type="this.media_type"
+        @touchstart="startSwipe"
+        @touchmove="swipe"
       />
     </div>
-    <button class="text-white btn-carousel right" @click="next">
+    <button class="btn-carousel_popular right" @click="next">
       <font-awesome-icon icon="chevron-right" class="text-white text-8xl" />
     </button>
-    <button class="btn-carousel left" @click="prev">
+    <button class="btn-carousel_popular left" @click="prev">
       <font-awesome-icon
         icon="fa-solid fa-chevron-left"
         class="text-white text-8xl"
@@ -52,6 +54,14 @@ export default {
         { id: 1, name: "Upcomming", value: "upcoming" },
         { id: 2, name: "Popular", value: "popular" },
       ],
+      itemPosition: {
+        x: 0,
+        y: 0,
+      },
+      touchStartPos: {
+        x: 0,
+        y: 0,
+      },
     };
   },
   methods: {
@@ -67,16 +77,35 @@ export default {
       const res = await apiMovies.getGenres();
       this.genres = res;
     },
-    next() {
-      document.getElementById("content").scrollLeft += 700;
-      document.getElementById("content").clientX += 700;
+    next(e) {
+      document.getElementById("content").scrollLeft += 496;
     },
     prev() {
-      document.getElementById("content").scrollLeft -= 700;
+      document.getElementById("content").scrollLeft -= 496;
     },
     changeOption(name) {
       this.selectedOpitonMovie(name);
       this.getData();
+    },
+    startSwipe(event) {
+      console.log(event);
+      this.touchStartPos.x = event.touches[0].clientX;
+      this.touchStartPos.y = event.touches[0].clientY;
+    },
+    swipe(event) {
+      console.log(event);
+      // document.getElementById("content").scrollLeft = event.touches[0].clientX;
+      const touchX = event.touches[0].clientX;
+      const touchY = event.touches[0].clientY;
+
+      const deltaX = touchX - this.touchStartPos.x;
+      const deltaY = touchY - this.touchStartPos.y;
+
+      this.itemPosition.x += deltaX;
+      this.itemPosition.y += deltaY;
+
+      this.touchStartPos.x = touchX;
+      this.touchStartPos.y = touchY;
     },
   },
   created() {
@@ -98,9 +127,9 @@ export default {
   margin-top: 16px;
 }
 
-.btn-carousel {
+.btn-carousel_popular {
   position: absolute;
-  top: calc(160% - 25px);
+  top: 160%;
 }
 
 .left {
@@ -109,8 +138,21 @@ export default {
 .right {
   right: 6%;
 }
+
 .currentOption {
   border-color: red;
   color: red;
+}
+
+@media (max-width: 1600px) {
+  .btn-carousel_popular {
+    top: 150%;
+  }
+}
+
+@media (max-width: 992px) {
+  .btn-carousel_popular {
+    display: none;
+  }
 }
 </style>

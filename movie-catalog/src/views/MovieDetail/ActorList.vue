@@ -1,6 +1,9 @@
 <template>
   <div class="swiper">
-    <div class="carousel">
+    <div class="carousel_actor">
+      <button class="text-white text-8xl" @click="prevSlide">
+        <font-awesome-icon icon="angles-left" />
+      </button>
       <div
         class="card"
         v-for="(actor, index) in actors"
@@ -15,13 +18,10 @@
           <span class="text-white text-xl">{{ actor.character }}</span>
         </div>
       </div>
+      <button class="text-white text-8xl" @click="nextSlide">
+        <font-awesome-icon icon="angles-right" />
+      </button>
     </div>
-    <button class="btn_slide left text-white text-8xl" @click="prevSlide">
-      <font-awesome-icon icon="angles-left" />
-    </button>
-    <button class="btn_slide right text-white text-8xl" @click="nextSlide">
-      <font-awesome-icon icon="angles-right" />
-    </button>
   </div>
 </template>
 <script>
@@ -73,15 +73,18 @@ export default {
   width: 100%;
   height: 100%;
 }
-.carousel {
-  overflow: hidden;
+
+.carousel_actor {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* overflow-y: hidden; */
   width: 100%;
-  height: 80vh;
+  height: 100%;
 }
 
 .card {
-  position: absolute;
-  top: 5%;
+  scroll-behavior: smooth;
   border-radius: 12px;
 }
 
@@ -89,18 +92,5 @@ export default {
   height: auto;
   width: 600px;
   border-radius: 12px;
-}
-
-.btn_slide {
-  position: absolute;
-  top: 50%;
-}
-
-.left {
-  left: 20%;
-}
-
-.right {
-  right: 20%;
 }
 </style>

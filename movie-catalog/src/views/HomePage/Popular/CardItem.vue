@@ -1,5 +1,5 @@
 <template>
-  <div class="card" @mouseover="showBtn = true" @mouseleave="showBtn = false">
+  <div class="card">
     <img :src="url + movie.poster_path" alt="poster" class="h-100" />
     <div class="flex w-full flex-col">
       <h2 class="text-white text-3xl font-bold my-2">
@@ -90,5 +90,19 @@ export default {
 
 .card_img_h {
   min-height: 300px;
+}
+
+@media (max-width: 1280px) {
+  .card {
+    min-width: 50%;
+    margin-right: 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  .card {
+    min-width: 100%;
+    margin-right: 15px;
+  }
 }
 </style>

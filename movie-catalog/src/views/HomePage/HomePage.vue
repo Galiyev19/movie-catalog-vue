@@ -23,7 +23,7 @@
     />
   </button>
   <div class="popular">
-    <div class="flex w-full justify-between items-end">
+    <div class="flex w-full justify-between items-end flex-wrap">
       <h2 class="text-8xl text-white">Featured Movie</h2>
       <h2 class="text-4xl text-red-600 cursor-pointer hover:text-white">
         See more <font-awesome-icon icon="chevron-right" />
@@ -32,9 +32,9 @@
     <popular />
   </div>
   <div class="serials">
-    <div class="flex w-full justify-between items-end">
+    <div class="flex w-full justify-between items-end flex-wrap">
       <h2 class="text-8xl text-white">TV Serials</h2>
-      <h2 class="text-4xl text-red-600 cursor-pointer hover:text-white">
+      <h2 class="text-4xl text-red-600 cursor-pointer hover:text-white sm:my-6">
         See more <font-awesome-icon icon="chevron-right" />
       </h2>
     </div>

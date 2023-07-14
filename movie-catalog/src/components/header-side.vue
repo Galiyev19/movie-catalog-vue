@@ -21,7 +21,7 @@
       >
     </nav>
     <input placeholder="Search" class="search_input" />
-    <div>
+    <div class="user_info">
       <h2 class="text-white">Account</h2>
     </div>
   </div>
@@ -72,5 +72,18 @@
 
 .search_input:focus {
   border: 1px solid cyan;
+}
+
+@media (max-width: 992px) {
+  .menu {
+    display: none;
+  }
+  .search_input {
+    display: none;
+  }
+
+  .user_info {
+    display: none;
+  }
 }
 </style>

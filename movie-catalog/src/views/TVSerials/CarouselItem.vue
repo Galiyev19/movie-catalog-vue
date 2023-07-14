@@ -1,18 +1,22 @@
 <template>
-  <div class="slide" v-show="currentSlide === index">
+  <div class="slide" :class="currentSlide === index ? 'active' : ''">
     <img
       :src="url + movie.backdrop_path || url + movie.poster_path"
       class="slide_img"
     />
     <div class="movie_info">
-      <h1 class="text-white text-8xl font-bold">
+      <h1
+        class="text-white text-8xl font-bold max-[992px]:text-6xl max-[768px]:text-4xl"
+      >
         {{ movie.original_title || movie.name }}
       </h1>
       <div class="flex items-center my-4">
         <img src="@/assets/images/imdb.svg" alt="imdb" class="imdb_img" />
         <span class="text-white ml-4">{{ movie.vote_average }} / 10</span>
       </div>
-      <p class="text-white mt-6 mb-6 text-2xl">{{ movie.overview }}</p>
+      <p class="text-white mt-6 mb-6 text-2xl w-2/5 max-[992px]:w-4/5">
+        {{ movie.overview }}
+      </p>
       <router-link
         :to="`/home/${movie.original_title}`"
         class="more_info_btn text-2xl"
@@ -52,14 +56,19 @@ export default {
   background-position: center;
   background-size: cover;
   opacity: 1;
+  clip-path: circle(0 at 0 100%);
+}
+
+.active {
+  clip-path: circle(150% at 0% 50%);
+  transition: 1.8s ease;
+  transition-property: clip-path;
 }
 
 .slide_img {
   height: 100%;
   width: 100%;
   object-fit: cover;
-  margin-left: auto;
-  margin-right: auto;
   opacity: 0.5;
   background-image: linear-gradient(rgba(32, 32, 32, 0.5), rgb(32, 32, 32) 95%);
 }
@@ -68,7 +77,8 @@ export default {
   position: absolute;
   top: 28%;
   left: 12%;
-  max-width: 40%;
+  max-width: 100%;
+  padding: 12px;
 }
 
 .imdb_img {

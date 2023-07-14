@@ -94,6 +94,14 @@ const apiMovies = {
       console.log(error);
     }
   },
+  getImageList: async (id, media_type) => {
+    try {
+      const response = await API.get(`/3/${media_type}/${id}/images`, options);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default apiMovies;
