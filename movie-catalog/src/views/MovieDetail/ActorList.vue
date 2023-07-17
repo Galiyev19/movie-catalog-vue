@@ -1,7 +1,10 @@
 <template>
   <div class="swiper">
     <div class="carousel_actor">
-      <button class="text-white text-8xl" @click="prevSlide">
+      <button
+        class="text-white text-8xl max-[992px]:text-6xl max-[768px]:text-4xl max-[576px]:text-2xl max-[418px]:text-xs"
+        @click="prevSlide"
+      >
         <font-awesome-icon icon="angles-left" />
       </button>
       <div
@@ -10,7 +13,8 @@
         :key="actor.id"
         v-show="currentSlide === index"
       >
-        <img :src="this.url + actor.profile_path" class="" />
+        <img :src="this.url + actor.profile_path" />
+
         <div class="flex flex-col w-100 items-center justify-center my-2">
           <span class="text-red-600 cursor-pointer font-bold text-2xl">{{
             actor.original_name
@@ -18,7 +22,10 @@
           <span class="text-white text-xl">{{ actor.character }}</span>
         </div>
       </div>
-      <button class="text-white text-8xl" @click="nextSlide">
+      <button
+        class="text-white text-8xl max-[992px]:text-6xl max-[768px]:text-4xl max-[576px]:text-2xl max-[418px]:text-xs"
+        @click="nextSlide"
+      >
         <font-awesome-icon icon="angles-right" />
       </button>
     </div>
@@ -84,13 +91,26 @@ export default {
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  padding: 24px 0px;
   scroll-behavior: smooth;
   border-radius: 12px;
+  min-height: 900px;
+  /* background-color: gray; */
 }
 
 .card img {
   height: auto;
   width: 600px;
   border-radius: 12px;
+}
+
+@media (max-width: 992px) {
+  .card img {
+    width: 300px;
+  }
 }
 </style>

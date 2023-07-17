@@ -1,24 +1,23 @@
 <template>
-  <div class="card">
-    <img :src="url + movie.poster_path" alt="poster" class="h-100" />
+  <div class="card min-w-[32rem]">
+    <router-link
+      :to="`/home/${movie.title || movie.name}`"
+      @click="onClickMoreDetail(movie.id, this.media_type)"
+    >
+      <img :src="url + movie.poster_path" alt="poster" />
+    </router-link>
     <div class="flex w-full flex-col">
       <h2 class="text-white text-3xl font-bold my-2">
         {{ movie.title || movie.name }}
       </h2>
-      <div class="flex w-full my-1">
+      <div class="flex w-full my-1 px-2">
         <img src="@/assets/images/imdb.svg" class="imdb_img" />
         <span class="text-white text-2xl ml-4">{{
           Math.trunc(movie.vote_average * 10) / 10
         }}</span>
-        <font-awesome-icon icon="heart" class="text-4xl icon" />
+        <font-awesome-icon icon="heart" class="text-4xl text-white icon" />
       </div>
     </div>
-    <router-link
-      :to="`/home/${movie.title || movie.name}`"
-      class="btn_more"
-      @click="onClickMoreDetail(movie.id, this.media_type)"
-      >More detail</router-link
-    >
   </div>
 </template>
 
@@ -48,10 +47,12 @@ export default {
 .card {
   display: flex;
   flex-direction: column;
-  min-width: 30%;
+  min-width: 25%;
+  width: 100%;
   margin-right: 30px;
   transition: 0.3s;
   justify-content: space-between;
+  margin-bottom: 16px;
 }
 
 .card:hover {
@@ -89,7 +90,12 @@ export default {
 }
 
 .card_img_h {
-  min-height: 300px;
+  height: 700px;
+  width: 100%;
+}
+
+.card_img_h:hover {
+  transform: scale(1);
 }
 
 @media (max-width: 1280px) {

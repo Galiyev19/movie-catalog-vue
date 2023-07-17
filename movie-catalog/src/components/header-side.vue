@@ -10,6 +10,11 @@
         >Home</router-link
       >
       <router-link
+        to="/movies"
+        class="text-white font-bold text-3xl hover:text-red-700 mx-2"
+        >Movie</router-link
+      >
+      <router-link
         to="/tv_serials"
         class="text-white font-bold text-3xl hover:text-red-700 mx-2"
         >TV Serials</router-link
@@ -84,6 +89,10 @@
 
   .user_info {
     display: none;
+  }
+
+  .header {
+    padding: 8px 5%;
   }
 }
 </style>

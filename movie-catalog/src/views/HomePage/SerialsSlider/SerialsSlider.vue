@@ -14,8 +14,9 @@
       </button>
     </div>
     <div
-      class="card_container scroll-smooth overflow-x-auto"
+      class="card_container scroll-smooth overflow-y-auto"
       id="serial_content"
+      ref="scrollRef"
     >
       <card-item
         v-for="item in serials"
@@ -24,10 +25,10 @@
         :media_type="this.media_type"
       />
     </div>
-    <button class="text-white btn-carousel right" @click="next">
+    <button class="text-white btn-carousel_serial right" @click="next">
       <font-awesome-icon icon="chevron-right" class="text-white text-8xl" />
     </button>
-    <button class="btn-carousel left" @click="prev">
+    <button class="btn-carousel_serial left" @click="prev">
       <font-awesome-icon
         icon="fa-solid fa-chevron-left"
         class="text-white text-8xl"
@@ -39,10 +40,36 @@
 import apiMovies from "../../../api/api-movies";
 import CardItem from "../Popular/CardItem.vue";
 import { mapActions } from "vuex";
-
+import { ref } from "vue";
 export default {
   name: "serials-slider",
   components: { CardItem },
+  setup() {
+    const scrollRef = ref(null);
+
+    const next = () => {
+      if (scrollRef.value) {
+        scrollRef.value.scrollBy({
+          left: window.innerWidth,
+          behavior: "smooth",
+        });
+      }
+    };
+
+    const prev = () => {
+      if (scrollRef.value) {
+        scrollRef.value.scrollBy({
+          left: -window.innerWidth,
+          behavior: "smooth",
+        });
+      }
+    };
+    return {
+      next,
+      scrollRef,
+      prev,
+    };
+  },
   data() {
     return {
       serials: [],
@@ -61,12 +88,6 @@ export default {
       );
       // console.log(result.results);
       this.serials = result.results;
-    },
-    next() {
-      document.getElementById("serial_content").scrollLeft += 500;
-    },
-    prev() {
-      document.getElementById("serial_content").scrollLeft -= 500;
     },
     changeOption(name) {
       this.selectedOptionTV(name);
@@ -87,14 +108,14 @@ export default {
 .card_container {
   display: flex;
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
   height: auto;
   margin-top: 16px;
 }
 
-.btn-carousel {
+.btn-carousel_serial {
   position: absolute;
-  top: 270%;
+  top: 252%;
 }
 
 .left {
@@ -111,5 +132,39 @@ export default {
 
 .btn-carousel {
   display: none;
+}
+
+::-webkit-scrollbar {
+  height: 8px;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb {
+  background: gray;
+  cursor: pointer;
+}
+
+@media (max-width: 1600px) {
+  .btn-carousel_serial {
+    top: 242%;
+  }
+}
+
+@media (max-width: 1440px) {
+  .btn-carousel_serial {
+    top: 232%;
+  }
+}
+
+@media (max-width: 1280px) {
+  .btn-carousel_serial {
+    top: 280%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .btn-carousel_serial {
+    display: none;
+  }
 }
 </style>

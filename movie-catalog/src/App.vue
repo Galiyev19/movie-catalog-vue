@@ -4,4 +4,12 @@
 
 <script></script>
 
-<style scoped></style>
+<style scoped>
+::-webkit-scrollbar {
+  height: 15px;
+}
+
+::-webkit-scrollbar-track {
+  background: #232323;
+}
+</style>

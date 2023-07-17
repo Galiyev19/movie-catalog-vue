@@ -13,7 +13,7 @@ const options = {
 const apiMovies = {
   getNowPlayingMovie: async () => {
     try {
-      const response = await API.get(`/3/movie/now_playing`, options);
+      const response = await API.get(`/3/trending/all/day`, options);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -40,7 +40,7 @@ const apiMovies = {
 
   getTVSerials: async () => {
     try {
-      const response = await API.get("/3/tv/popular", options);
+      const response = await API.get("/3/tv/top_rated", options);
       // console.log(response);
       return response.data;
     } catch (e) {

@@ -3,7 +3,7 @@
     <div class="wrapper">
       <font-awesome-icon
         icon="angles-left"
-        class="text-white text-8xl btn_slider"
+        class="text-white text-8xl btn_slider max-[992px]:text-6xl max-[768px]:text-4xl max-[576px]:text-2xl max-[418px]:text-xs"
         @click="prev"
       />
       <div class="carousel_img" id="carousel_img">
@@ -11,7 +11,7 @@
       </div>
       <font-awesome-icon
         icon="angles-right"
-        class="text-white text-8xl btn_slider"
+        class="text-white text-8xl btn_slider max-[992px]:text-6xl max-[768px]:text-4xl max-[576px]:text-2xl max-[418px]:text-xs"
         @click="next"
       />
     </div>

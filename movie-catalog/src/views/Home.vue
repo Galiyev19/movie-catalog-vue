@@ -2,7 +2,7 @@
   <section class="home">
     <header-side />
     <router-view></router-view>
-    <!-- <footer-vue /> -->
+    <footer-vue />
   </section>
 </template>
 
@@ -19,5 +19,12 @@ export default {
 <style>
 body {
   min-height: 100%;
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
 }
 </style>

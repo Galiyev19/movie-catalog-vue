@@ -14,13 +14,15 @@
         <img src="@/assets/images/imdb.svg" alt="imdb" class="imdb_img" />
         <span class="text-white ml-4">{{ movie.vote_average }} / 10</span>
       </div>
-      <p class="text-white mt-6 mb-6 text-2xl w-2/5 max-[992px]:w-4/5">
+      <p
+        class="text-white mt-6 mb-6 text-2xl w-2/5 max-[992px]:w-4/5 max-[768px]:text-xl"
+      >
         {{ movie.overview }}
       </p>
       <router-link
-        :to="`/home/${movie.original_title}`"
+        :to="`/home/${movie.original_title || movie.name}`"
         class="more_info_btn text-2xl"
-        @click="onClickMoreDetail(movie.id, this.media_type)"
+        @click="onClickMoreDetail(movie.id, movie.media_type)"
         >More</router-link
       >
     </div>
@@ -38,9 +40,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["selectMovieId"]),
+    ...mapActions(["selectMovieId", "setMediaType"]),
     onClickMoreDetail(id, media_type) {
-      this.selectMovieId(id), this.setMediaType(media_type);
+      this.selectMovieId(id);
+      this.setMediaType(media_type);
     },
   },
 };

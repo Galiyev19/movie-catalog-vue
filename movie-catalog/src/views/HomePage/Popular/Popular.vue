@@ -14,14 +14,16 @@
         {{ option.name }}
       </button>
     </div>
-    <div class="card_container scroll-smooth overflow-x-auto" id="content">
+    <div
+      class="card_container scroll-smooth overflow-y-auto"
+      id="content"
+      ref="scrollRef"
+    >
       <card-item
         v-for="item in movies"
         :movie="item"
         :key="item.id"
         :media_type="this.media_type"
-        @touchstart="startSwipe"
-        @touchmove="swipe"
       />
     </div>
     <button class="btn-carousel_popular right" @click="next">
@@ -40,7 +42,34 @@ import apiMovies from "@/api/api-movies";
 import CardItem from "./CardItem.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { mapActions } from "vuex";
+import { ref } from "vue";
 export default {
+  setup() {
+    const scrollRef = ref(null);
+
+    const next = () => {
+      if (scrollRef.value) {
+        scrollRef.value.scrollBy({
+          left: window.innerWidth,
+          behavior: "smooth",
+        });
+      }
+    };
+
+    const prev = () => {
+      if (scrollRef.value) {
+        scrollRef.value.scrollBy({
+          left: -window.innerWidth,
+          behavior: "smooth",
+        });
+      }
+    };
+    return {
+      next,
+      scrollRef,
+      prev,
+    };
+  },
   name: "popular",
   components: { CardItem, Swiper, SwiperSlide },
   data() {
@@ -54,14 +83,6 @@ export default {
         { id: 1, name: "Upcomming", value: "upcoming" },
         { id: 2, name: "Popular", value: "popular" },
       ],
-      itemPosition: {
-        x: 0,
-        y: 0,
-      },
-      touchStartPos: {
-        x: 0,
-        y: 0,
-      },
     };
   },
   methods: {
@@ -77,35 +98,9 @@ export default {
       const res = await apiMovies.getGenres();
       this.genres = res;
     },
-    next(e) {
-      document.getElementById("content").scrollLeft += 496;
-    },
-    prev() {
-      document.getElementById("content").scrollLeft -= 496;
-    },
     changeOption(name) {
       this.selectedOpitonMovie(name);
       this.getData();
-    },
-    startSwipe(event) {
-      console.log(event);
-      this.touchStartPos.x = event.touches[0].clientX;
-      this.touchStartPos.y = event.touches[0].clientY;
-    },
-    swipe(event) {
-      console.log(event);
-      // document.getElementById("content").scrollLeft = event.touches[0].clientX;
-      const touchX = event.touches[0].clientX;
-      const touchY = event.touches[0].clientY;
-
-      const deltaX = touchX - this.touchStartPos.x;
-      const deltaY = touchY - this.touchStartPos.y;
-
-      this.itemPosition.x += deltaX;
-      this.itemPosition.y += deltaY;
-
-      this.touchStartPos.x = touchX;
-      this.touchStartPos.y = touchY;
     },
   },
   created() {
@@ -122,14 +117,14 @@ export default {
 }
 .card_container {
   display: flex;
-  overflow: hidden;
+  /* overflow: hidden; */
   height: auto;
   margin-top: 16px;
 }
 
 .btn-carousel_popular {
   position: absolute;
-  top: 160%;
+  top: 150%;
 }
 
 .left {
@@ -142,6 +137,16 @@ export default {
 .currentOption {
   border-color: red;
   color: red;
+}
+
+::-webkit-scrollbar {
+  height: 8px;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb {
+  background: gray;
+  cursor: pointer;
 }
 
 @media (max-width: 1600px) {

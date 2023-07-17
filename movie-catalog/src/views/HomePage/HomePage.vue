@@ -2,7 +2,7 @@
   <div class="carousel">
     <div class="container_slider">
       <carousel-item
-        v-for="(item, index) in movies"
+        v-for="(item, index) in data"
         :movie="item"
         :key="`item-${index}`"
         :current-slide="currentSlide"
@@ -24,8 +24,10 @@
   </button>
   <div class="popular">
     <div class="flex w-full justify-between items-end flex-wrap">
-      <h2 class="text-8xl text-white">Featured Movie</h2>
-      <h2 class="text-4xl text-red-600 cursor-pointer hover:text-white">
+      <h2 class="text-8xl text-white max-[576px]:text-4xl">Featured Movie</h2>
+      <h2
+        class="text-4xl text-red-600 cursor-pointer hover:text-white max-[414px]:text-2xl"
+      >
         See more <font-awesome-icon icon="chevron-right" />
       </h2>
     </div>
@@ -55,36 +57,40 @@ export default {
     return {
       currentSlide: 0,
       slideInterval: null,
-      movies: [],
+      data: [],
     };
   },
 
   methods: {
     async getData() {
       const res = await apiMovies.getNowPlayingMovie();
-      // console.log(res);
-      this.movies = res.results;
+      console.log(res);
+      // const serials = await apiMovies.getTVSerials();
+      // res.results.push(...serials.results);
+      // console.log(res.results);
+      // this.data = res.results.sort(() => Math.random() - 0.5);
+      this.data = res.results;
     },
     setCurrentSlide(index) {
       this.currentSlide = index;
     },
     prevSlide() {
       const index =
-        this.currentSlide > 0 ? this.currentSlide - 1 : this.movies.length - 1;
+        this.currentSlide > 0 ? this.currentSlide - 1 : this.data.length - 1;
       this.setCurrentSlide(index);
     },
     nextSlide() {
       const index =
-        this.currentSlide < this.movies.length - 1 ? this.currentSlide + 1 : 0;
+        this.currentSlide < this.data.length - 1 ? this.currentSlide + 1 : 0;
       this.setCurrentSlide(index);
     },
   },
   mounted() {
-    // this.slideInterval = setInterval(() => {
-    //   const index =
-    //     this.currentSlide < this.movies.length - 1 ? this.currentSlide + 1 : 0;
-    //   this.setCurrentSlide(index);
-    // }, 30000);
+    this.slideInterval = setInterval(() => {
+      const index =
+        this.currentSlide < this.data.length - 1 ? this.currentSlide + 1 : 0;
+      this.setCurrentSlide(index);
+    }, 10000);
   },
   beforeMount() {
     clearInterval(this.slideInterval);
@@ -116,7 +122,7 @@ body {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   /* padding: 16px 5%; */
 }
 
