@@ -58,6 +58,16 @@ export default {
       this.setCurrentSlide(index);
     },
   },
+  mounted() {
+    this.slideInterval = setInterval(() => {
+      const index =
+        this.currentSlide < this.serials.length - 1 ? this.currentSlide + 1 : 0;
+      this.setCurrentSlide(index);
+    }, 10000);
+  },
+  beforeMount() {
+    clearInterval(this.slideInterval);
+  },
   created() {
     this.getTvSerials();
   },

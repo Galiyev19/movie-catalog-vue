@@ -6,6 +6,7 @@ import HomePage from "../views/HomePage/HomePage.vue";
 import MovieDeatail from "../views/MovieDetail/MovieDetail.vue";
 import TVSerials from "../views/TVSerials/TVSerials.vue";
 import Movie from "../views/Movies/Movies.vue";
+import PersonDetail from '../views/Person/PersonDetail.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +35,11 @@ const router = createRouter({
           path: "/home/:title",
           name: "movieDetail",
           component: MovieDeatail,
+        },
+        {
+          path: "/person/:id",
+          name: "personDetail",
+          component: PersonDetail,
         },
       ],
     },

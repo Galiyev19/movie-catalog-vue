@@ -115,6 +115,7 @@ export default {
   flex-direction: column;
   width: 100%;
 }
+
 .card_container {
   display: flex;
   /* overflow: hidden; */
@@ -130,6 +131,7 @@ export default {
 .left {
   left: 6%;
 }
+
 .right {
   right: 6%;
 }
@@ -147,6 +149,13 @@ export default {
 ::-webkit-scrollbar-thumb {
   background: gray;
   cursor: pointer;
+}
+
+
+@media (max-width: 1920px) {
+  .btn-carousel_popular {
+    top: 160%;
+  }
 }
 
 @media (max-width: 1600px) {

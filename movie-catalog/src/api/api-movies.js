@@ -102,6 +102,22 @@ const apiMovies = {
       console.log(error);
     }
   },
+  getPersonInfo: async (id) => {
+    try {
+      const response = await API.get(`/3/person/${id}`,options)
+      return response.data
+    } catch (error) {
+      console.log(error)
+    }
+  },
+  getLinks: async (id) => {
+    try{
+      const response = await API.get(`/3/person/${id}/external_ids`,options)
+      return response.data
+    }catch(error){
+      console.log(error)
+    }
+  }
 };
 
 export default apiMovies;

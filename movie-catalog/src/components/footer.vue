@@ -12,5 +12,6 @@ export default {};
   width: 100%;
   border-top: 1px solid white;
   padding: 32px 5%;
+  min-height: 5vh;
 }
 </style>

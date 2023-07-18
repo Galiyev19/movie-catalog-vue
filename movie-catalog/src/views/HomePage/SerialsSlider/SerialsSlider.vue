@@ -1,38 +1,21 @@
 <template>
   <div class="main">
     <div class="flex w-full items-start my-4">
-      <button
-        class="more_info_btn text-3xl mr-4"
-        v-for="option in options"
-        :key="option.id"
-        @click="changeOption(option.value)"
-        :class="{
+      <button class="more_info_btn text-3xl mr-4" v-for="option in options" :key="option.id"
+        @click="changeOption(option.value)" :class="{
           currentOption: option.value === this.$store.getters.selectedOptionTV,
-        }"
-      >
+        }">
         {{ option.name }}
       </button>
     </div>
-    <div
-      class="card_container scroll-smooth overflow-y-auto"
-      id="serial_content"
-      ref="scrollRef"
-    >
-      <card-item
-        v-for="item in serials"
-        :movie="item"
-        :key="item.id"
-        :media_type="this.media_type"
-      />
+    <div class="card_container scroll-smooth overflow-y-auto" id="serial_content" ref="scrollRef">
+      <card-item v-for="item in serials" :movie="item" :key="item.id" :media_type="this.media_type" />
     </div>
     <button class="text-white btn-carousel_serial right" @click="next">
       <font-awesome-icon icon="chevron-right" class="text-white text-8xl" />
     </button>
     <button class="btn-carousel_serial left" @click="prev">
-      <font-awesome-icon
-        icon="fa-solid fa-chevron-left"
-        class="text-white text-8xl"
-      />
+      <font-awesome-icon icon="fa-solid fa-chevron-left" class="text-white text-8xl" />
     </button>
   </div>
 </template>
@@ -115,12 +98,13 @@ export default {
 
 .btn-carousel_serial {
   position: absolute;
-  top: 252%;
+  top: 255%;
 }
 
 .left {
   left: 6%;
 }
+
 .right {
   right: 6%;
 }
@@ -144,6 +128,14 @@ export default {
   cursor: pointer;
 }
 
+
+/* @media (max-width: 1920px) {
+  .btn-carousel_serial {
+    top: 278%;
+  }
+}
+
+
 @media (max-width: 1600px) {
   .btn-carousel_serial {
     top: 242%;
@@ -160,7 +152,7 @@ export default {
   .btn-carousel_serial {
     top: 280%;
   }
-}
+} */
 
 @media (max-width: 1024px) {
   .btn-carousel_serial {

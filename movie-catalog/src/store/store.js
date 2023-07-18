@@ -3,6 +3,7 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     movieId: null,
+    personId: null,
     media_type: "",
     selectOptionTV: "top_rated",
     selectOptionMovie: "now_playing",
@@ -20,6 +21,9 @@ export default createStore({
     selectedOptionMovie(state) {
       return state.selectOptionMovie;
     },
+    personId(state) {
+      return state.personId
+    }
   },
   mutations: {
     selectMovieId(state, id) {
@@ -40,6 +44,11 @@ export default createStore({
       console.log(optionName);
       state.selectOptionMovie = optionName;
     },
+    setPersonId(state,id){
+      console.log(id)
+      sessionStorage.setItem("personId", id);
+      state.personId = id
+    }
   },
   actions: {
     selectMovieId({ commit }, id) {
@@ -54,5 +63,8 @@ export default createStore({
     selectedOpitonMovie({ commit }, optionName) {
       commit("selectedOpitonMovie", optionName);
     },
+    setPersonId ({commit},id){
+      commit("setPersonId",id)
+    }
   },
 });

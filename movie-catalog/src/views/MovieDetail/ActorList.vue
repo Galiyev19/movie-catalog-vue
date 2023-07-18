@@ -3,29 +3,23 @@
     <div class="carousel_actor">
       <button
         class="text-white text-8xl max-[992px]:text-6xl max-[768px]:text-4xl max-[576px]:text-2xl max-[418px]:text-xs"
-        @click="prevSlide"
-      >
+        @click="prevSlide">
         <font-awesome-icon icon="angles-left" />
       </button>
-      <div
-        class="card"
-        v-for="(actor, index) in actors"
-        :key="actor.id"
-        v-show="currentSlide === index"
-      >
+      <div class="card" v-for="(actor, index) in actors" :key="actor.id" v-show="currentSlide === index">
         <img :src="this.url + actor.profile_path" />
 
         <div class="flex flex-col w-100 items-center justify-center my-2">
-          <span class="text-red-600 cursor-pointer font-bold text-2xl">{{
-            actor.original_name
-          }}</span>
+          <router-link @click="setPersonId(actor.id)" :to="`/person/${actor.id}`"
+            class="text-red-600 cursor-pointer font-bold text-2xl">{{
+              actor.original_name
+            }}</router-link>
           <span class="text-white text-xl">{{ actor.character }}</span>
         </div>
       </div>
       <button
         class="text-white text-8xl max-[992px]:text-6xl max-[768px]:text-4xl max-[576px]:text-2xl max-[418px]:text-xs"
-        @click="nextSlide"
-      >
+        @click="nextSlide">
         <font-awesome-icon icon="angles-right" />
       </button>
     </div>
@@ -34,7 +28,7 @@
 <script>
 import apiMovies from "../../api/api-movies";
 import { Swiper, SwiperSlide } from "swiper/vue";
-
+import { mapActions } from "vuex";
 import "swiper/css";
 export default {
   name: "actor-list-swiper",
@@ -47,6 +41,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["setPersonId"]),
     async getActorsList() {
       const id = sessionStorage.getItem("id");
       const media_type = sessionStorage.getItem("media_type");
