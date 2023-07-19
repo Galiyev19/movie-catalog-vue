@@ -7,6 +7,8 @@ export default createStore({
     media_type: "",
     selectOptionTV: "top_rated",
     selectOptionMovie: "now_playing",
+    currentVideo: null, 
+    showModalVideo: false
   },
   getters: {
     movieId(state) {
@@ -23,6 +25,12 @@ export default createStore({
     },
     personId(state) {
       return state.personId
+    },
+    getCurrentVideo(state){
+      return state.currentVideo
+    },
+    getShowModalVideo(state){
+      return state.showModalVideo
     }
   },
   mutations: {
@@ -48,6 +56,13 @@ export default createStore({
       console.log(id)
       sessionStorage.setItem("personId", id);
       state.personId = id
+    },
+    setCurrentVideo(state,video){
+      state.currentVideo = video
+    },
+    setShowModalVideo(state,option){
+      console.log(state.showModalVideo)
+      state.showModalVideo = option
     }
   },
   actions: {
@@ -65,6 +80,13 @@ export default createStore({
     },
     setPersonId ({commit},id){
       commit("setPersonId",id)
+    },
+    setCurrentVideo({commit}, video){
+      console.log(video)
+      commit("setCurrentVideo",video)
+    },
+    setShowModalVideo({commit},option){
+      commit("setShowModalVideo",option)
     }
   },
 });

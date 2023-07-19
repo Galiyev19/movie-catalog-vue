@@ -117,6 +117,7 @@
         class="text-white text-6xl font-bold my-5 underline max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl">
         Videos
       </h2>
+      <video-list />
     </div>
   </div>
 </template>
@@ -125,9 +126,10 @@ import { mapActions } from "vuex";
 import apiMovies from "../../api/api-movies";
 import ActorList from "./ActorList.vue";
 import ImageList from "./ImageList.vue";
+import VideoList from "./VideoList/VideoList.vue";
 export default {
   name: "movie-detail",
-  components: { ActorList, ImageList },
+  components: { ActorList, ImageList, VideoList },
   data() {
     return {
       url: "https://image.tmdb.org/t/p/original/",

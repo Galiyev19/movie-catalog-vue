@@ -1,9 +1,6 @@
 <template>
   <div class="card min-w-[32rem]">
-    <router-link
-      :to="`/home/${movie.title || movie.name}`"
-      @click="onClickMoreDetail(movie.id, this.media_type)"
-    >
+    <router-link :to="`/home/${movie.title || movie.name}`" @click="onClickMoreDetail(movie.id, this.media_type)">
       <img :src="url + movie.poster_path" alt="poster" />
     </router-link>
     <div class="flex w-full flex-col">
@@ -39,7 +36,7 @@ export default {
       this.selectMovieId(id), this.setMediaType(media_type);
     },
   },
-  created() {},
+  created() { },
 };
 </script>
 

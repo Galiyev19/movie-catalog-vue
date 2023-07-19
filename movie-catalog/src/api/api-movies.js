@@ -104,18 +104,51 @@ const apiMovies = {
   },
   getPersonInfo: async (id) => {
     try {
-      const response = await API.get(`/3/person/${id}`,options)
-      return response.data
+      const response = await API.get(`/3/person/${id}`,options);
+      return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   },
   getLinks: async (id) => {
     try{
       const response = await API.get(`/3/person/${id}/external_ids`,options)
-      return response.data
+      return response.data;
     }catch(error){
-      console.log(error)
+      console.log(error);
+    }
+  },
+  getVideoListById: async (media_type,id) => {
+    try {
+      const response = await API.get(`3/${media_type}/${id}/videos`, options);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
+  getPersonMovieCredits: async (id) => {
+    try {
+      const movieCredits = await API.get(`/3/person/${id}/movie_credits`,options);
+      return movieCredits;
+    } catch (error) {
+      return result;
+    }
+  },
+  getPersonTvCredits: async (id) => {
+    try {
+      const TvCredits = await API.get(`/3/person/${id}/tv_credits`,options);
+      return TvCredits;
+    } catch (error) {
+      return result;
+    }
+  },
+  getPersonImage: async (id) => {
+    try {
+      const response = await API.get(`/3/person/${id}/images`,options);
+      return response.data.profiles
+    } catch (error) {
+      
     }
   }
 };
