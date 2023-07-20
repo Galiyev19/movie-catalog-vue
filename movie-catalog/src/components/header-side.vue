@@ -7,6 +7,7 @@
       <router-link to="/home" class="text-white font-bold text-3xl hover:text-red-700 mx-2">Home</router-link>
       <router-link to="/movies" class="text-white font-bold text-3xl hover:text-red-700 mx-2">Movie</router-link>
       <router-link to="/tv_serials" class="text-white font-bold text-3xl hover:text-red-700 mx-2">TV Serials</router-link>
+      <router-link to="/tv_serials" class="text-white font-bold text-3xl hover:text-red-700 mx-2">My List</router-link>
     </nav>
     <input placeholder="Search" class="search_input" />
     <div class="user_info">

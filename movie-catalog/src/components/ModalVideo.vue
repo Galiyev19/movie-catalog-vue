@@ -1,5 +1,5 @@
 <template>
-    <div class="content">
+    <div class="content max-[992px]:w-full">
         <vue-plyr>
             <div data-plyr-provider="youtube" :data-plyr-embed-id="this.$store.getters.getCurrentVideo.key"></div>
         </vue-plyr>

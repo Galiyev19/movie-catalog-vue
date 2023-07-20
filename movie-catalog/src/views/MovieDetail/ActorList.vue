@@ -46,7 +46,7 @@ export default {
       const id = sessionStorage.getItem("id");
       const media_type = sessionStorage.getItem("media_type");
       const result = await apiMovies.getActorsList(id, media_type);
-      console.log(result);
+      // console.log(result);
       this.actors = result.cast;
     },
     setCurrentSlide(index) {
@@ -106,6 +106,10 @@ export default {
 @media (max-width: 992px) {
   .card img {
     width: 300px;
+  }
+
+  .card {
+    min-height: auto;
   }
 }
 </style>

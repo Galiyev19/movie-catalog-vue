@@ -54,7 +54,6 @@ export default {
 
 .card:hover {
   opacity: 0.7;
-
   cursor: pointer;
 }
 
@@ -106,6 +105,7 @@ export default {
   .card {
     min-width: 100%;
     margin-right: 15px;
+    justify-content: space-around;
   }
 }
 </style>

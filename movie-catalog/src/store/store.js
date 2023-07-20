@@ -1,16 +1,22 @@
 import { createStore } from "vuex";
+import apiMovies from "../api/api-movies";
+
 
 export default createStore({
   state: {
+    movieDetail: {},
     movieId: null,
     personId: null,
     media_type: "",
     selectOptionTV: "top_rated",
     selectOptionMovie: "now_playing",
     currentVideo: null, 
-    showModalVideo: false
+    showModalVideo: false,
   },
   getters: {
+    getMovieDetail(state){
+      return state.movieDetail
+    },
     movieId(state) {
       return state.movieId;
     },
@@ -34,6 +40,9 @@ export default createStore({
     }
   },
   mutations: {
+    setMovieDetail (state,movieDetail) {
+      state.movieDetail = movieDetail;
+    },
     selectMovieId(state, id) {
       sessionStorage.setItem("id", id);
       console.log(id);
@@ -66,6 +75,18 @@ export default createStore({
     }
   },
   actions: {
+    async getMovieDetail({commit}) {
+      try{
+        const id = sessionStorage.getItem("id")
+        const media_type = sessionStorage.getItem("media_type")
+        // console.log(id)
+        const data = await apiMovies.getMovieTrailer(id,media_type)
+        console.log(data)
+        commit("setMovieDetail",data)
+      }catch(error){
+        console.error(error);
+      }
+    },
     selectMovieId({ commit }, id) {
       commit("selectMovieId", id);
     },
@@ -87,6 +108,6 @@ export default createStore({
     },
     setShowModalVideo({commit},option){
       commit("setShowModalVideo",option)
-    }
+    },
   },
 });

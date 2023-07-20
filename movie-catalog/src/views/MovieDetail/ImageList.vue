@@ -58,7 +58,7 @@ export default {
       const id = sessionStorage.getItem("id");
       const media_type = sessionStorage.getItem("media_type");
       const result = await apiMovies.getImageList(id, media_type);
-      console.log(result);
+      // console.log(result);
       this.images = result.backdrops;
     },
   },
@@ -150,8 +150,31 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .wrapper {
+    height: 100%;
+  }
+
   .carousel_img img {
     width: 100%;
+    object-fit: cover;
+    object-position: center center;
+    height: auto;
   }
+
+  .btn_slider {
+    margin: 0px 3px;
+    height: 80%;
+  }
+
+  .img_list_container {
+    padding: 8px 4px;
+    margin: 0px;
+  }
+
+  .carousel_img img {
+    margin: 0;
+  }
+
+
 }
 </style>

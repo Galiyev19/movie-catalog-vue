@@ -2,7 +2,7 @@
   <div class="main">
     <div class="flex w-full flex-wrap items-start my-4">
       <button
-        class="more_info_btn text-3xl mr-4 my-4"
+        class="more_info_btn text-3xl mr-4 my-4 max-[992px]:text-lg"
         :class="{
           currentOption:
             option.value === this.$store.getters.selectedOptionMovie,

@@ -1,5 +1,6 @@
 <template>
-  <div class="main_movie_detail" :style="`background-image:linear-gradient(rgba(32, 32, 32, 0.5), rgb(32, 32, 32) 100%), url(${url + movieDetail.backdrop_path || url + movie.poster_path
+  <div class="main_movie_detail" :style="`background-image:linear-gradient(rgba(32, 32, 32, 0.5), rgb(32, 32, 32) 100%), 
+  url(${url + this.$store.getters.getMovieDetail.backdrop_path || url + this.$store.getters.getMovieDetail.poster_path
     }) `">
     <!-- /**
   * ! Backround movie
@@ -7,10 +8,10 @@
     <div class="flex justify-center items-start flex-col w-100 review">
       <h1
         class="text-white font-bold text-8xl mb-2 max-[1920px]:text-6xl max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl">
-        {{ movieDetail.title || movieDetail.name }}
+        {{ this.$store.getters.getMovieDetail.title || this.$store.getters.getMovieDetail.name }}
       </h1>
       <p class="text-white font-bold text-2xl leading-9 my-6 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
-        {{ movieDetail.overview }}
+        {{ this.$store.getters.getMovieDetail.overview }}
       </p>
       <button class="more_info_btn" @click="isOpen = true">Watch trailer</button>
     </div>
@@ -19,9 +20,11 @@
   */ -->
     <div class="modal" v-if="this.isOpen === true">
       <font-awesome-icon icon="circle-xmark" class="text-4xl text-white icon_close" @click="this.isOpen = false" />
-      <div class="video_player" v-if="video.length > 0">
+      <div class="video_player" v-if="this.$store.getters.getMovieDetail.videos.results.length > 0">
         <vue-plyr>
-          <div data-plyr-provider="youtube" :data-plyr-embed-id="video[0].key"></div>
+          <div data-plyr-provider="youtube"
+            :data-plyr-embed-id="this.$store.getters.getMovieDetail.videos.results[0].key">
+          </div>
         </vue-plyr>
       </div>
     </div>
@@ -33,7 +36,7 @@
         <span
           class="text-white font-bold text-6xl mb-9 underline max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl">Storyline</span>
         <p class="text-white font-bold text-4xl leading-9 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
-          {{ movieDetail.overview }}
+          {{ this.$store.getters.getMovieDetail.overview }}
         </p>
         <div class="flex flex-col my-4">
           <p class="text-2xl text-red-500 my-4 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs"
@@ -45,7 +48,7 @@
           </p>
           <p class="text-2xl text-red-500 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
             Genres:
-            <span v-for="genres in movieDetail.genres" :key="genres.id"
+            <span v-for="genres in this.$store.getters.getMovieDetail.genres" :key="genres.id"
               class="text-white underline mx-0.5 cursor-pointer hover:text-red-500">
               {{ genres.name }}
             </span>
@@ -53,7 +56,8 @@
           <div class="flex text-2xl text-red-500 my-4 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
             Rating:
             <div class="flex">
-              <span class="text-white underline mx-2">{{ Math.trunc(movieDetail.vote_average * 10) / 10 }}
+              <span class="text-white underline mx-2">{{ Math.trunc(this.$store.getters.getMovieDetail.vote_average * 10)
+                / 10 }}
               </span>
               <img src="@/assets/images/imdb.svg" class="imdb_img" />
             </div>
@@ -61,33 +65,43 @@
           <p class="text-2xl text-red-500 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
             Original language:
             <span class="text-white underline">{{
-              movieDetail.original_language?.toUpperCase()
+              this.$store.getters.getMovieDetail.original_language?.toUpperCase()
             }}</span>
           </p>
           <p class="text-2xl text-red-500 my-4 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
             Release Date:
             <span class="text-white underline">{{
-              movieDetail.release_date || movieDetail.first_air_date
+              this.$store.getters.getMovieDetail.release_date || this.$store.getters.getMovieDetail.first_air_date
             }}</span>
           </p>
           <p class="text-2xl text-red-500 my-2 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
             Status:
-            <span class="text-white underline">{{ movieDetail.status }}</span>
+            <span class="text-white underline">{{ this.$store.getters.getMovieDetail.status }}</span>
           </p>
           <p class="text-2xl text-red-500 my-2 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs"
             v-if="movieDetail.runtime">
             Runtime:
-            <span class="text-white underline">{{ movieDetail.runtime }} min</span>
+            <span class="text-white underline">{{ this.$store.getters.getMovieDetail.runtime }} min</span>
           </p>
           <p class="text-2xl text-red-500 my-2 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs"
-            v-if="movieDetail.runtime">
+            v-if="this.$store.getters.getMovieDetail.runtime">
             Production:
             <span class="text-white underline">
-              {{ movieDetail.production_companies.map((i) => i.name).join(", ") }}
+              {{ this.$store.getters.getMovieDetail.production_companies.map((i) => i.name).join(", ") }}
             </span>
           </p>
         </div>
       </div>
+    </div>
+    <!-- /**
+      * !Seasons
+    */ -->
+    <div class="flex flex-col w-full mb-10" v-if="this.$store.getters.getMovieDetail.hasOwnProperty('seasons')">
+      <h2
+        class="text-white mb-6 text-6xl font-bold underline max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl">
+        Seasons
+      </h2>
+      <seasons />
     </div>
     <!-- /**
       * !Movie cast
@@ -105,7 +119,7 @@
       <router-link to="/"
         class="text-white text-6xl font-bold my-5 underline max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl cursor-pointer">
         Photos <font-awesome-icon icon="chevron-right"
-          class="text-white text-4xl ml-7 text-center content-center hover:text-red-600 cursor-pointer" />
+          class="text-white text-4xl ml-7 text-center content-center hover:text-red-600 cursor-pointer max-[992px]:text-lg" />
       </router-link>
       <image-list class="my-10" />
     </div>
@@ -127,9 +141,10 @@ import apiMovies from "../../api/api-movies";
 import ActorList from "./ActorList.vue";
 import ImageList from "./ImageList.vue";
 import VideoList from "./VideoList/VideoList.vue";
+import Seasons from "../../components/Media/Seasons.vue";
 export default {
   name: "movie-detail",
-  components: { ActorList, ImageList, VideoList },
+  components: { ActorList, ImageList, VideoList, Seasons },
   data() {
     return {
       url: "https://image.tmdb.org/t/p/original/",
@@ -141,22 +156,22 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["setPersonId"]),
-    async getMovieTrailer() {
-      const id = sessionStorage.getItem("id");
-      const mediaType = sessionStorage.getItem("media_type");
+    ...mapActions(["setPersonId", "getMovieDetail"]),
+    // async getMovieTrailer() {
+    //   const id = sessionStorage.getItem("id");
+    //   const mediaType = sessionStorage.getItem("media_type");
 
-      const result = await apiMovies.getMovieTrailer(id, mediaType);
-      console.log(result);
-      this.movieDetail = result;
-      this.video = this.movieDetail.videos.results;
-    },
+    //   const result = await apiMovies.getMovieTrailer(id, mediaType);
+    //   console.log(result);
+    //   this.movieDetail = result;
+    //   this.video = this.movieDetail.videos.results;
+    // },
     async getActors() {
       const id = sessionStorage.getItem("id");
       const media_type = sessionStorage.getItem("media_type");
       const result = await apiMovies.getActorsList(id, media_type);
       const test = result.crew.filter((item) => item.job === "Director");
-      console.log(test)
+      // console.log(test)
       this.director = result.crew.filter((item) => item.job === "Director");
     },
     onReady() {
@@ -165,16 +180,31 @@ export default {
   },
   mounted() { },
   created() {
-    this.getMovieTrailer();
+    // this.getMovieTrailer();
     this.getActors();
+    this.getMovieDetail()
   },
   computed() {
-    this.getMovieTrailer();
+    // this.getMovieTrailer();
     this.getActors();
+    this.getMovieDetail()
   },
 };
 </script>
 <style scoped>
+.main_movie_detail {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* height: 100vh; */
+  padding: 124px 5% 0% 5%;
+  background-size: contain;
+  object-fit: cover;
+  object-position: center;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(rgba(32, 32, 32, 0.5), rgb(32, 32, 32) 70%);
+}
+
 .icon_close {
   position: absolute;
   top: 15%;
@@ -197,6 +227,7 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  z-index: 1000;
 }
 
 .imdb_img {
@@ -204,18 +235,7 @@ export default {
   width: 70px;
 }
 
-.main_movie_detail {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  /* height: 100vh; */
-  padding: 124px 5% 0% 5%;
-  background-size: contain;
-  object-fit: cover;
-  object-position: center;
-  background-repeat: no-repeat;
-  background-image: linear-gradient(rgba(32, 32, 32, 0.5), rgb(32, 32, 32) 70%);
-}
+
 
 .video_player {
   padding: 8px;
@@ -254,6 +274,14 @@ export default {
   .imdb_img {
     height: 17px;
     width: 35px;
+  }
+
+  .main_movie_detail {
+    padding: 124px 2%;
+  }
+
+  .video_player {
+    width: 95%;
   }
 }
 </style>

@@ -2,7 +2,7 @@
     <div class="grid gap-5 grid-cols-4 py-5 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
         <video-item v-for="video in videoList" :key="video.id" :video="video" />
         <div class="modal" v-if="this.$store.getters.getShowModalVideo === true">
-            <font-awesome-icon icon="circle-xmark" class="text-5xl text-white icon_close"
+            <font-awesome-icon icon="circle-xmark" class="text-5xl text-white icon_close max-[992px]:text-3xl"
                 @click="this.setShowModalVideo(false)" />
             <modal-video />
         </div>
@@ -27,7 +27,7 @@ export default {
             const media_type = sessionStorage.getItem("media_type");
             const id = sessionStorage.getItem("id");
             const result = await apiMovies.getVideoListById(media_type, id);
-            console.log("video", result)
+            // console.log("video", result)
             this.videoList = result.results;
         },
     },
