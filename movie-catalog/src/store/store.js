@@ -4,6 +4,7 @@ import apiMovies from "../api/api-movies";
 
 export default createStore({
   state: {
+    isAuth: false,
     movieDetail: {},
     movieId: null,
     personId: null,
@@ -37,6 +38,9 @@ export default createStore({
     },
     getShowModalVideo(state){
       return state.showModalVideo
+    },
+    getIsAuth() {
+      return state.isAuth
     }
   },
   mutations: {
@@ -72,6 +76,9 @@ export default createStore({
     setShowModalVideo(state,option){
       console.log(state.showModalVideo)
       state.showModalVideo = option
+    },
+    setIsAuth(state) {
+      state.isAuth = true;
     }
   },
   actions: {
@@ -109,5 +116,8 @@ export default createStore({
     setShowModalVideo({commit},option){
       commit("setShowModalVideo",option)
     },
+    setIsAuth({commit}){
+      commit("setIsAuth")
+    }
   },
 });

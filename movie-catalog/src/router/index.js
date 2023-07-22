@@ -47,13 +47,17 @@ const router = createRouter({
       path: "/sign-in",
       name: "sign-in",
       component: SignIn,
+      meta: { requiresAuth: false } 
     },
     {
       path: "/sign-up",
       name: "sign-up",
       component: SignUp,
+      meta: { requiresAuth: false } 
     },
   ],
 });
+
+
 
 export default router;

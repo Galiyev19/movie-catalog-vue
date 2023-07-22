@@ -10,13 +10,34 @@
       <router-link to="/tv_serials" class="text-white font-bold text-3xl hover:text-red-700 mx-2">My List</router-link>
     </nav>
     <input placeholder="Search" class="search_input" />
-    <div class="user_info">
-      <h2 class="text-white">Account</h2>
+    <div class="user_info" @click="toggleMenu">
+      <font-awesome-icon icon="user" class="text-white text-3xl" />
+      <div class="user_menu_block" id="menu">
+        <ul class="user_menu">
+          <li class="user_menu_item">Account</li>
+          <li class="user_menu_item">My List</li>
+          <li class="user_menu_item" @click="LogOut">Logout</li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  name: "header",
+  methods: {
+    toggleMenu() {
+      let menu = document.getElementById("menu")
+      menu.classList.toggle("open_menu")
+    },
+    LogOut() {
+      localStorage.removeItem("token")
+      this.$router.push("sign-in")
+    }
+  }
+}
+</script>
 
 <style scoped>
 .header {
@@ -61,6 +82,50 @@
 
 .search_input:focus {
   border: 1px solid cyan;
+}
+
+.user_info {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  width: 60px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.user_menu_block {
+  position: absolute;
+  background: #fff;
+  top: 80%;
+  right: 3%;
+  width: 180px;
+  border-radius: 8px;
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.5s;
+}
+
+.user_menu_block.open_menu {
+  max-height: 300px;
+}
+
+.user_menu {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 8px 4px;
+}
+
+.user_menu_item {
+  font-size: 24px;
+  width: 100%;
+}
+
+.user_menu_item:hover {
+  background: #f80505;
 }
 
 @media (max-width: 992px) {

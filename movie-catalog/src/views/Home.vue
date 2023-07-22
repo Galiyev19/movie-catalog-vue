@@ -7,12 +7,19 @@
 </template>
 
 <script>
+
 import footerVue from "../components/footer.vue";
 import HeaderSide from "../components/header-side.vue";
 
 export default {
   name: "Home",
   components: { HeaderSide, footerVue },
+  created() {
+    this.$router.push("/home")
+  },
+  computed() {
+    this.$router.push("/home")
+  }
 };
 </script>
 
