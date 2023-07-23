@@ -11,14 +11,18 @@
       <font-awesome-icon icon="fa-solid fa-chevron-left" class="text-white text-5xl" />
     </button>
   </div>
+  <div class="flex w-full px-24 py-24">
+    <grid-media />
+  </div>
 </template>
 <script>
 import apiMovies from '../../api/api-movies';
-
+import GridMedia from '../../components/Media/GridMedia.vue';
 import CarouselItem from '../TVSerials/CarouselItem.vue';
+
 export default {
   name: "movies",
-  components: { CarouselItem },
+  components: { CarouselItem, GridMedia },
   data() {
     return {
       movies: [],
@@ -29,7 +33,6 @@ export default {
   methods: {
     async getMovies() {
       const result = await apiMovies.getNowPlayingMovie()
-      console.log(result.results)
       this.movies = result.results
     },
     setCurrentSlide(index) {
@@ -58,6 +61,7 @@ export default {
   },
   created() {
     this.getMovies()
+    sessionStorage.setItem('media_type', 'movie')
   },
   computed() {
     this.getMovies()
@@ -67,6 +71,7 @@ export default {
 <style scoped>
 .movies_main {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;

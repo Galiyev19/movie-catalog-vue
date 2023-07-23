@@ -12,11 +12,13 @@
     <input placeholder="Search" class="search_input" />
     <div class="user_info" @click="toggleMenu">
       <font-awesome-icon icon="user" class="text-white text-3xl" />
-      <div class="user_menu_block" id="menu">
+      <div class="user_menu_block" id="user_menu">
         <ul class="user_menu">
-          <li class="user_menu_item">Account</li>
-          <li class="user_menu_item">My List</li>
-          <li class="user_menu_item" @click="LogOut">Logout</li>
+          <router-link to="/profile" class="user_menu_item"><font-awesome-icon icon="user" class="mr-2" />
+            Profile</router-link>
+          <li class="user_menu_item"> <font-awesome-icon icon="list" class="mr-2" />My List</li>
+          <li class="user_menu_item" @click="LogOut"><font-awesome-icon icon="right-from-bracket" class="mr-2" />Logout
+          </li>
         </ul>
       </div>
     </div>
@@ -28,7 +30,7 @@ export default {
   name: "header",
   methods: {
     toggleMenu() {
-      let menu = document.getElementById("menu")
+      let menu = document.getElementById("user_menu")
       menu.classList.toggle("open_menu")
     },
     LogOut() {
@@ -100,7 +102,7 @@ export default {
   position: absolute;
   background: #fff;
   top: 80%;
-  right: 3%;
+  right: 2.5%;
   width: 180px;
   border-radius: 8px;
   max-height: 0px;
@@ -116,12 +118,14 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: start;
-  padding: 8px 4px;
+  padding: 4px 0px;
 }
 
 .user_menu_item {
   font-size: 24px;
+  padding: 9px 16px;
   width: 100%;
+  text-align: start;
 }
 
 .user_menu_item:hover {

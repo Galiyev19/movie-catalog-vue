@@ -13,7 +13,7 @@
         {{ movie.overview }}
       </p>
       <router-link :to="`/home/${movie.original_title || movie.name}`" class="more_info_btn text-2xl"
-        @click="onClickMoreDetail(movie.id, movie.media_type)">More</router-link>
+        @click="onClickMoreDetail(movie.id, this.media_type)">More</router-link>
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       url: "https://image.tmdb.org/t/p/original",
-      media_type: "movie",
+      media_type: sessionStorage.getItem("media_type"),
     };
   },
   methods: {

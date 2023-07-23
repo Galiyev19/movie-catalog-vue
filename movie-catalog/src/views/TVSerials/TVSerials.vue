@@ -24,13 +24,17 @@
       />
     </button>
   </div>
+  <div class="flex w-full px-24 py-24">
+      <grid-media />
+    </div>
 </template>
 <script>
 import apiMovies from "../../api/api-movies";
 import CarouselItem from "./CarouselItem.vue";
+import GridMedia from "../../components/Media/GridMedia.vue";
 export default {
   name: "tv-serials",
-  components: { CarouselItem },
+  components: { CarouselItem, GridMedia },
   data() {
     return {
       serials: [],
@@ -70,6 +74,7 @@ export default {
   },
   created() {
     this.getTvSerials();
+    sessionStorage.setItem('media_type', 'tv')
   },
 };
 </script>

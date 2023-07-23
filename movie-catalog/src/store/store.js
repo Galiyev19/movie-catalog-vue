@@ -88,7 +88,7 @@ export default createStore({
         const media_type = sessionStorage.getItem("media_type")
         // console.log(id)
         const data = await apiMovies.getMovieTrailer(id,media_type)
-        console.log(data)
+        // console.log(data)
         commit("setMovieDetail",data)
       }catch(error){
         console.error(error);
@@ -110,7 +110,7 @@ export default createStore({
       commit("setPersonId",id)
     },
     setCurrentVideo({commit}, video){
-      console.log(video)
+      // console.log(video)
       commit("setCurrentVideo",video)
     },
     setShowModalVideo({commit},option){

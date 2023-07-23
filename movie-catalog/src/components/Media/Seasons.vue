@@ -17,7 +17,7 @@
             </div>
 
         </div>
-        <button class="btn_sliderssa" @click="next">
+        <button class="btn_slider" @click="next">
             <font-awesome-icon icon="chevron-right"
                 class="text-white text-6xl max-[992px]:text-6xl max-[768px]:text-4xl max-[576px]:text-2xl max-[418px]:text-xs hover:text-red-500" />
         </button>

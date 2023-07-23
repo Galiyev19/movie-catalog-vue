@@ -150,6 +150,14 @@ const apiMovies = {
     } catch (error) {
       
     }
+  },
+  getPopularMovieTv: async (media_type,page = 1) => {
+    try{
+      const response = await API.get(`/3/${media_type}/popular?&page=${page}`,options)
+      return response.data
+    }catch(error){
+      console.log(error)
+    }
   }
 };
 
