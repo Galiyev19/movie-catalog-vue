@@ -4,12 +4,12 @@
       <img :src="url + movie.poster_path" alt="poster" />
     </router-link>
     <div class="flex w-full flex-col">
-      <h2 class="text-white text-3xl font-bold my-2">
+      <h2 class="text-white font-montserrat text-4xl font-bold my-2">
         {{ movie.title || movie.name }}
       </h2>
       <div class="flex w-full my-1 px-2">
         <img src="@/assets/images/imdb.svg" class="imdb_img" />
-        <span class="text-white text-2xl ml-4">{{
+        <span class="text-white font-montserrat text-2xl ml-4">{{
           Math.trunc(movie.vote_average * 10) / 10
         }}</span>
         <font-awesome-icon icon="heart" class="text-4xl text-white icon" />

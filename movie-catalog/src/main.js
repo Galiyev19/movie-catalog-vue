@@ -15,27 +15,23 @@ library.add(fas,fab);
 
 
 const app = createApp(App);
-const token = localStorage.getItem("token");
-router.beforeEach((to,from,next) => {
-  
-  // if(to.name !== "sign-in" && !localStorage.getItem('token')){
-  //   next({name: "sign-in"});
-  // }else{
-  //   next()
-  // }
 
-  if (to.meta.requiresAuth) {
-    // If authentication is required, check if the user is logged in
-    if (localStorage.getItem('token')) {
-      // If the user is logged in, allow the navigation
-      next();
+router.beforeEach((to,from,next) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    // User is not logged in, redirect to the login or registration page
+    if (to.name !== 'sign-in' && to.name !== 'sign-up') {
+      next({ name: 'sign-in' }); // Redirect to login page
     } else {
-      // If the user is not logged in, redirect to the login page
-      next('/sign-in');
+      next(); // Proceed to the login or registration page
     }
   } else {
-    // If the route does not require authentication, allow the navigation
-    next();
+    // User is logged in, redirect to the default route (e.g., dashboard)
+    if (to.name === 'sign-in' || to.name === 'sign-up') {
+      next({ name: 'home' }); // Redirect to dashboard or any other default route
+    } else {
+      next(); // Proceed to the default route
+    }
   }
 
 })

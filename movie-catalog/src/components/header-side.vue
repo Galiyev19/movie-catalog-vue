@@ -4,40 +4,77 @@
       <img class="logo" src="@/assets/images/logo.svg" />
     </router-link>
     <nav class="menu">
-      <router-link to="/home" class="text-white font-bold text-3xl hover:text-red-700 mx-2">Home</router-link>
-      <router-link to="/movies" class="text-white font-bold text-3xl hover:text-red-700 mx-2">Movie</router-link>
-      <router-link to="/tv_serials" class="text-white font-bold text-3xl hover:text-red-700 mx-2">TV Serials</router-link>
-      <router-link to="/tv_serials" class="text-white font-bold text-3xl hover:text-red-700 mx-2">My List</router-link>
+      <router-link to="/home"
+        class="text-white font-bold text-2xl hover:text-red-700 mx-2 font-montserrat">HOME</router-link>
+      <router-link to="/movies"
+        class="text-white font-bold text-2xl hover:text-red-700 mx-2 font-montserrat">MOVIE</router-link>
+      <router-link to="/tv_serials"
+        class="text-white font-bold text-2xl hover:text-red-700 mx-2 font-montserrat">TV</router-link>
+      <router-link to="/tv_serials" class="text-white font-bold text-2xl hover:text-red-700 mx-2 font-montserrat">MY
+        LIST</router-link>
     </nav>
-    <input placeholder="Search" class="search_input" />
-    <div class="user_info" @click="toggleMenu">
+    <div class="search_input ">
+      <input placeholder="Search"
+        class="outline-none border-none w-full bg-transparent font-montserrat placeholder:font-montserrat  placeholder:text-lg placeholder:text-white"
+        v-bind:value="search" @input="search = $event.target.value" />
+      <router-link to="/search-results" @click="this.inputSearch">
+        <font-awesome-icon icon="magnifying-glass" class="text-white text-2xl cursor-pointer" />
+      </router-link>
+    </div>
+    <div class=" user_info" @click="toggleMenu">
       <font-awesome-icon icon="user" class="text-white text-3xl" />
       <div class="user_menu_block" id="user_menu">
         <ul class="user_menu">
-          <router-link to="/profile" class="user_menu_item"><font-awesome-icon icon="user" class="mr-2" />
+          <router-link to="/profile" class="user_menu_item font-montserrat"><font-awesome-icon icon="user" class="mr-2" />
             Profile</router-link>
-          <li class="user_menu_item"> <font-awesome-icon icon="list" class="mr-2" />My List</li>
-          <li class="user_menu_item" @click="LogOut"><font-awesome-icon icon="right-from-bracket" class="mr-2" />Logout
+          <router-link to="/my-list" class="user_menu_item font-montserrat"> <font-awesome-icon icon="list"
+              class="mr-2" />My List</router-link>
+          <li class="user_menu_item font-montserrat" @click="LogOut"><font-awesome-icon icon="right-from-bracket"
+              class="mr-2" />Logout
           </li>
         </ul>
       </div>
     </div>
+    <font-awesome-icon icon="bars-staggered" class="text-3xl burger text-white cursor-pointer" />
   </div>
 </template>
 
 <script>
+import apiMovies from '../api/api-movies'
+import { mapActions } from 'vuex'
 export default {
   name: "header",
+  data() {
+    return {
+      search: ""
+    }
+  },
   methods: {
+    ...mapActions(['setSearchValue', 'getSearchResult']),
     toggleMenu() {
       let menu = document.getElementById("user_menu")
       menu.classList.toggle("open_menu")
     },
     LogOut() {
       localStorage.removeItem("token")
+      localStorage.setItem("isAuth", false)
       this.$router.push("sign-in")
+    },
+    inputSearch() {
+      // console.log(this.search)
+      this.setSearchValue(this.search)
+      this.getSearchResult(this.search)
+
     }
-  }
+  },
+  computed() {
+    this.inputSearch()
+    this.search
+  },
+  mounted() {
+    this.inputSearch()
+    this.search
+  },
 }
 </script>
 
@@ -66,11 +103,12 @@ export default {
 }
 
 .search_input {
+  display: flex;
   outline: none;
   border: 1px solid black;
   border-radius: 8px;
   font-size: 18px;
-  padding: 8px 6px;
+  padding: 12px 8px;
   width: 45%;
   background: rgba(0, 0, 0, 0);
   outline: none;
@@ -83,7 +121,7 @@ export default {
 }
 
 .search_input:focus {
-  border: 1px solid cyan;
+  border: 1px solid red;
 }
 
 .user_info {
@@ -132,7 +170,17 @@ export default {
   background: #f80505;
 }
 
-@media (max-width: 992px) {
+
+.burger {
+  display: none;
+}
+
+
+@media (max-width: 1024px) {
+  .burger {
+    display: flex;
+  }
+
   .menu {
     display: none;
   }

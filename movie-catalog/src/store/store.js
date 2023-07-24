@@ -4,6 +4,7 @@ import apiMovies from "../api/api-movies";
 
 export default createStore({
   state: {
+    userId: null,
     isAuth: false,
     movieDetail: {},
     movieId: null,
@@ -13,8 +14,13 @@ export default createStore({
     selectOptionMovie: "now_playing",
     currentVideo: null, 
     showModalVideo: false,
+    searchResult: [],
+    searchValue: "",
   },
   getters: {
+    getUserId(state) {
+      return state.userId
+    },
     getMovieDetail(state){
       return state.movieDetail
     },
@@ -39,11 +45,20 @@ export default createStore({
     getShowModalVideo(state){
       return state.showModalVideo
     },
-    getIsAuth() {
+    getIsAuth(state) {
       return state.isAuth
-    }
+    },
+    getSearchResult(state) {
+      return state.searchResult
+    },
+    getSearchValue(state) {
+      return state.searchValue
+    },
   },
   mutations: {
+    setUserId(state,id) {
+      state.userId = id
+    },
     setMovieDetail (state,movieDetail) {
       state.movieDetail = movieDetail;
     },
@@ -77,8 +92,13 @@ export default createStore({
       console.log(state.showModalVideo)
       state.showModalVideo = option
     },
-    setIsAuth(state) {
-      state.isAuth = true;
+    setSearchResult(state,results){
+      // console.log(results)
+      state.searchResult = results;
+    },
+    setSearchValue (state,value){
+      // console.log(value)
+      state.searchValue = value
     }
   },
   actions: {
@@ -93,6 +113,22 @@ export default createStore({
       }catch(error){
         console.error(error);
       }
+    },
+    async getSearchResult({commit},searchValue){
+      try{
+        const data = await apiMovies.searchData(searchValue)
+        console.log(data.data.results)
+        commit("setSearchResult",data.data.results)
+      }catch(error){
+        console.log(error)
+      }
+    },
+    setUserId({commit},id){
+      console.log(id)
+      commit("setUserId",id)
+    },
+    setSearchValue({ commit }, value) {
+      commit("setSearchValue", value);
     },
     selectMovieId({ commit }, id) {
       commit("selectMovieId", id);

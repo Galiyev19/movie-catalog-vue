@@ -13,8 +13,8 @@
   </button>
   <div class="popular">
     <div class="flex w-full justify-between items-end flex-wrap">
-      <h2 class="text-8xl text-white max-[576px]:text-4xl">Featured Movie</h2>
-      <h2 class="text-4xl text-red-600 cursor-pointer hover:text-white max-[414px]:text-2xl">
+      <h2 class="text-8xl text-white max-[576px]:text-4xl font-montserrat">Featured Movie</h2>
+      <h2 class="text-4xl text-red-600 cursor-pointer hover:text-white max-[414px]:text-2xl font-montserrat">
         See more <font-awesome-icon icon="chevron-right" />
       </h2>
     </div>
@@ -22,8 +22,8 @@
   </div>
   <div class="serials">
     <div class="flex w-full justify-between items-end flex-wrap">
-      <h2 class="text-8xl text-white max-[992px]:text-4xl">TV Serials</h2>
-      <h2 class="text-4xl text-red-600 cursor-pointer hover:text-white max-[414px]:text-2xl">
+      <h2 class="text-8xl text-white max-[992px]:text-4xl font-montserrat">TV Serials</h2>
+      <h2 class="text-4xl text-red-600 cursor-pointer hover:text-white max-[414px]:text-2xl font-montserrat">
         See more <font-awesome-icon icon="chevron-right" />
       </h2>
     </div>

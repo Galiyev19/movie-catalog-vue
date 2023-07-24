@@ -158,7 +158,15 @@ const apiMovies = {
     }catch(error){
       console.log(error)
     }
-  }
+  },
+  searchData: async (search) => {
+    try{
+      const response = await API.get(`/3/search/multi?query=${search}`,options)
+      return response
+    }catch(error){
+      return error
+    }
+  },
 };
 
 export default apiMovies;

@@ -8,6 +8,7 @@ import TVSerials from "../views/TVSerials/TVSerials.vue";
 import Movie from "../views/Movies/Movies.vue";
 import PersonDetail from '../views/Person/PersonDetail.vue'
 import Profile from '../views/User/Profile.vue'
+import SearchResults from '../views/SearhResults/SearchResults.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,7 +47,12 @@ const router = createRouter({
           path: "/profile",
           name: "userProfile",
           component: Profile
-        }
+        },
+        {
+          path: "/search-results",
+          name: "searhResults",
+          component: SearchResults
+        },
       ],
     },
     {

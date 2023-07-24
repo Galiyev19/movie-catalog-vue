@@ -41,6 +41,7 @@
 
 <script>
 import axios from 'axios'
+import { mapActions } from 'vuex'
 export default {
   name: "sign-in",
   data() {
@@ -52,6 +53,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["setUserId"]),
     async handleSubmit() {
       try {
         const data = {
@@ -60,7 +62,10 @@ export default {
         }
         const response = await axios.post("http://localhost:4444/sign-in", data)
         console.log(response.data)
-        localStorage.setItem("token", response.data.token)
+        this.setUserId(response.data.id)
+        localStorage.setItem("userId", response.data._id)
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("isAuth", true)
         this.$router.push("/home")
       } catch (error) {
         console.log(error)

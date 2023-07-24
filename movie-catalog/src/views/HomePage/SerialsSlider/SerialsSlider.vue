@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="flex w-full items-start my-4">
-      <button class="more_info_btn text-3xl mr-4" v-for="option in options" :key="option.id"
+      <button class="more_info_btn font-montserrat text-3xl mr-4" v-for="option in options" :key="option.id"
         @click="changeOption(option.value)" :class="{
           currentOption: option.value === this.$store.getters.selectedOptionTV,
         }">
@@ -12,10 +12,10 @@
       <card-item v-for="item in serials" :movie="item" :key="item.id" :media_type="this.media_type" />
     </div>
     <button class="text-white btn-carousel_serial right" @click="next">
-      <font-awesome-icon icon="chevron-right" class="text-white text-8xl" />
+      <font-awesome-icon icon="chevron-right" class="text-white font-montserrat text-8xl" />
     </button>
     <button class="btn-carousel_serial left" @click="prev">
-      <font-awesome-icon icon="fa-solid fa-chevron-left" class="text-white text-8xl" />
+      <font-awesome-icon icon="fa-solid fa-chevron-left" class="text-white font-montserrat text-8xl" />
     </button>
   </div>
 </template>

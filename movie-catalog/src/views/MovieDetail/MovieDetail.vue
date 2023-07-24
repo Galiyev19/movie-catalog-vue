@@ -7,13 +7,14 @@
   */ -->
     <div class="flex justify-center items-start flex-col w-100 review">
       <h1
-        class="text-white font-bold text-8xl mb-2 max-[1920px]:text-6xl max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl">
+        class="text-white font-montserrat font-bold text-8xl mb-2 max-[1920px]:text-6xl max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl">
         {{ this.$store.getters.getMovieDetail.title || this.$store.getters.getMovieDetail.name }}
       </h1>
-      <p class="text-white font-bold text-2xl leading-9 my-6 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
+      <p
+        class="text-white font-montserrat font-bold text-2xl leading-9 my-6 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
         {{ this.$store.getters.getMovieDetail.overview }}
       </p>
-      <button class="more_info_btn" @click="isOpen = true">Watch trailer</button>
+      <button class="more_info_btn font-montserrat" @click="isOpen = true">Watch trailer</button>
     </div>
     <!-- /**
   * ! Video player
@@ -34,59 +35,63 @@
     <div class="flex w-full flex-col">
       <div class="flex flex-col justify-center w-full mt-16 py-4">
         <span
-          class="text-white font-bold text-6xl mb-9 underline max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl">Storyline</span>
-        <p class="text-white font-bold text-4xl leading-9 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
+          class="text-white font-montserrat font-bold text-6xl mb-9 underline max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl">Storyline</span>
+        <p
+          class="text-white font-montserrat font-bold text-4xl leading-9 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
           {{ this.$store.getters.getMovieDetail.overview }}
         </p>
         <div class="flex flex-col my-4">
-          <p class="text-2xl text-red-500 my-4 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs"
+          <p class="font-montserrat text-2xl text-red-500 my-4 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs"
             v-if="this.director.length !== 0">
             Director:
-            <span class="text-white underline cursor-pointer hover:text-red-500" v-for="item in director" :key="item.id"
-              @click="setPersonId(item.id)"><router-link :to="`/person/${item.id}`">{{ item.original_name
+            <span class="text-white font-montserrat underline cursor-pointer hover:text-red-500" v-for="item in director"
+              :key="item.id" @click="setPersonId(item.id)"><router-link :to="`/person/${item.id}`">{{ item.original_name
               }}</router-link></span>
           </p>
-          <p class="text-2xl text-red-500 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
+          <p class="font-montserrat text-2xl text-red-500 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
             Genres:
             <span v-for="genres in this.$store.getters.getMovieDetail.genres" :key="genres.id"
-              class="text-white underline mx-0.5 cursor-pointer hover:text-red-500">
+              class="text-white font-montserrat underline mx-0.5 cursor-pointer hover:text-red-500">
               {{ genres.name }}
             </span>
           </p>
           <div class="flex text-2xl text-red-500 my-4 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
             Rating:
             <div class="flex">
-              <span class="text-white underline mx-2">{{ Math.trunc(this.$store.getters.getMovieDetail.vote_average * 10)
+              <span class="text-white font-montserrat underline mx-2">{{
+                Math.trunc(this.$store.getters.getMovieDetail.vote_average * 10)
                 / 10 }}
               </span>
               <img src="@/assets/images/imdb.svg" class="imdb_img" />
             </div>
           </div>
-          <p class="text-2xl text-red-500 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
+          <p class="text-2xl font-montserrat text-red-500 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
             Original language:
-            <span class="text-white underline">{{
+            <span class="text-white  font-montserrat underline">{{
               this.$store.getters.getMovieDetail.original_language?.toUpperCase()
             }}</span>
           </p>
-          <p class="text-2xl text-red-500 my-4 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
+          <p
+            class="text-2xl font-montserrat text-red-500 my-4 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
             Release Date:
-            <span class="text-white underline">{{
+            <span class="text-white font-montserrat underline">{{
               this.$store.getters.getMovieDetail.release_date || this.$store.getters.getMovieDetail.first_air_date
             }}</span>
           </p>
-          <p class="text-2xl text-red-500 my-2 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
+          <p
+            class="text-2xl font-montserrat text-red-500 my-2 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs">
             Status:
-            <span class="text-white underline">{{ this.$store.getters.getMovieDetail.status }}</span>
+            <span class="text-white font-montserrat underline">{{ this.$store.getters.getMovieDetail.status }}</span>
           </p>
-          <p class="text-2xl text-red-500 my-2 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs"
+          <p class="text-2xl font-montserrat text-red-500 my-2 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs"
             v-if="movieDetail.runtime">
             Runtime:
-            <span class="text-white underline">{{ this.$store.getters.getMovieDetail.runtime }} min</span>
+            <span class="text-white font-montserrat underline">{{ this.$store.getters.getMovieDetail.runtime }} min</span>
           </p>
-          <p class="text-2xl text-red-500 my-2 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs"
+          <p class="text-2xl font-montserrat text-red-500 my-2 max-[992px]:text-xl max-[768px]:text-sm max-[576px]:text-xs"
             v-if="this.$store.getters.getMovieDetail.runtime">
             Production:
-            <span class="text-white underline">
+            <span class="text-white font-montserrat underline">
               {{ this.$store.getters.getMovieDetail.production_companies.map((i) => i.name).join(", ") }}
             </span>
           </p>
@@ -98,7 +103,7 @@
     */ -->
     <div class="flex flex-col w-full mb-10" v-if="this.$store.getters.getMovieDetail.hasOwnProperty('seasons')">
       <h2
-        class="text-white mb-6 text-6xl font-bold underline max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl">
+        class="text-white mb-6 font-montserrat text-6xl font-bold underline max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl ">
         Seasons
       </h2>
       <seasons />
@@ -107,7 +112,8 @@
       * !Movie cast
     */ -->
     <div class="flex flex-col w-full my-2">
-      <h2 class="text-white text-6xl font-bold underline max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl">
+      <h2
+        class="text-white font-montserrat text-6xl font-bold underline max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl">
         Top Cast
       </h2>
       <actor-list />
@@ -117,9 +123,9 @@
     */ -->
     <div class="flex flex-col w-full my-5 hover:text-red-600">
       <router-link to="/"
-        class="text-white text-6xl font-bold my-5 underline max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl cursor-pointer">
+        class="text-white font-montserrat text-6xl font-bold my-5 underline max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl cursor-pointer">
         Photos <font-awesome-icon icon="chevron-right"
-          class="text-white text-4xl ml-7 text-center content-center hover:text-red-600 cursor-pointer max-[992px]:text-lg" />
+          class="text-white font-montserrat text-4xl ml-7 text-center content-center hover:text-red-600 cursor-pointer max-[992px]:text-lg" />
       </router-link>
       <image-list class="my-10" />
     </div>
@@ -128,7 +134,7 @@
     */ -->
     <div class="flex flex-col w-full my-5">
       <h2
-        class="text-white text-6xl font-bold my-5 underline max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl">
+        class="text-white font-montserrat text-6xl font-bold my-5 underline max-[992px]:text-4xl max-[768px]:text-2xl max-[576px]:text-xl">
         Videos
       </h2>
       <video-list />

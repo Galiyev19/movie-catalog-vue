@@ -2,17 +2,18 @@
   <div class="slide" :class="currentSlide === index ? 'active' : ''">
     <img :src="url + movie.backdrop_path || url + movie.poster_path" class="slide_img" />
     <div class="movie_info">
-      <h1 class="text-white text-8xl font-bold max-[992px]:text-6xl max-[768px]:text-4xl">
+      <h1 class="text-white font-montserrat text-8xl font-bold max-[992px]:text-6xl max-[768px]:text-4xl">
         {{ movie.original_title || movie.name }}
       </h1>
       <div class="flex items-center my-4">
         <img src="@/assets/images/imdb.svg" alt="imdb" class="imdb_img" />
-        <span class="text-white ml-4">{{ movie.vote_average }} / 10</span>
+        <span class="text-white ml-4 font-montserrat">{{ movie.vote_average }} / 10</span>
       </div>
-      <p class="text-white mt-6 mb-6 text-2xl w-2/5 max-[992px]:w-4/5 max-[768px]:text-xl max-[576px]:text-sm">
+      <p
+        class="text-white mt-6 mb-6 font-montserrat text-2xl w-2/5 max-[992px]:w-4/5 max-[768px]:text-xl max-[576px]:text-sm">
         {{ movie.overview }}
       </p>
-      <router-link :to="`/home/${movie.original_title || movie.name}`" class="more_info_btn text-2xl"
+      <router-link :to="`/home/${movie.original_title || movie.name}`" class="more_info_btn text-2xl font-montserrat"
         @click="onClickMoreDetail(movie.id, this.media_type)">More</router-link>
     </div>
   </div>

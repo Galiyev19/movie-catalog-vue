@@ -9,7 +9,7 @@
             <div class="card_season cursor-pointer relative hover:opacity-70"
                 v-for="(season, index) in this.$store.getters.getMovieDetail.seasons" :key="season.id"
                 v-on:mouseover="mouseover(index)" v-on:mouseleave="this.mouseLeave()">
-                <img :src="url + season.poster_path" class="" />
+                <img :src="url + season.poster_path" class="object-contain max-h-[800px]" />
                 <div class="show flex-col items-center justify-center absolute h-full w-full inset-0 card_season__content">
                     <h2 class="text-red-600 text-3xl font-bold">Season Name: {{ season.name }}</h2>
                     <h2 class="text-red-600 text-3xl font-bold">Episodes: {{ season.episode_count }}</h2>
