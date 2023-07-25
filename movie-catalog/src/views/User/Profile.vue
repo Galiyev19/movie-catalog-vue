@@ -27,19 +27,26 @@ export default {
     },
     methods: {
         async getUserData() {
-            const userId = localStorage.getItem("userId");
-            const response = await axios.get("http://localhost:4444/auth/me", {
-                headers: {
-                    accept: "application/json",
-                    Authorization:
-                        "Bearer" + localStorage.getItem('token'),
-                },
-            })
-            console.log(response.data)
-            this.data = response.data
+            try {
+                const response = await axios.get("http://localhost:4444/auth/me", {
+                    headers: {
+                        accept: "application/json",
+                        Authorization:
+                            "Bearer" + localStorage.getItem('token'),
+                    },
+                })
+                console.log(response.data)
+                this.data = response.data
+            } catch (e) {
+                console.log(e)
+            }
+
         }
     },
     created() {
+        this.getUserData()
+    },
+    computed() {
         this.getUserData()
     }
 }

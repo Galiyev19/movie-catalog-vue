@@ -36,6 +36,7 @@ import apiMovies from "../../api/api-movies";
 import CarouselItem from "../TVSerials/CarouselItem.vue";
 import Popular from "./Popular/Popular.vue";
 import SerialSlider from "./SerialsSlider/SerialsSlider.vue";
+import { mapActions } from 'vuex'
 
 export default {
   name: "Home",
@@ -49,6 +50,7 @@ export default {
   },
 
   methods: {
+    ...mapActions(["getUserInfo"]),
     async getData() {
       const res = await apiMovies.getNowPlayingMovie();
       console.log(res);
@@ -56,7 +58,7 @@ export default {
       // res.results.push(...serials.results);
       // console.log(res.results);
       // this.data = res.results.sort(() => Math.random() - 0.5);
-      this.data = res.results;
+      this.data = res?.results;
     },
     setCurrentSlide(index) {
       this.currentSlide = index;
@@ -84,6 +86,10 @@ export default {
   },
   created() {
     this.getData(this.selectedOption);
+    this.getUserInfo()
+  },
+  computed() {
+    this.getUserInfo()
   },
   watch: {},
 };

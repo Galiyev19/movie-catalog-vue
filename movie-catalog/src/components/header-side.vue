@@ -10,7 +10,7 @@
         class="text-white font-bold text-2xl hover:text-red-700 mx-2 font-montserrat">MOVIE</router-link>
       <router-link to="/tv_serials"
         class="text-white font-bold text-2xl hover:text-red-700 mx-2 font-montserrat">TV</router-link>
-      <router-link to="/tv_serials" class="text-white font-bold text-2xl hover:text-red-700 mx-2 font-montserrat">MY
+      <router-link to="/my-list" class="text-white font-bold text-2xl hover:text-red-700 mx-2 font-montserrat">MY
         LIST</router-link>
     </nav>
     <div class="search_input ">

@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 import apiMovies from "../api/api-movies";
-
+import axios from 'axios'
 
 export default createStore({
   state: {
@@ -16,6 +16,7 @@ export default createStore({
     showModalVideo: false,
     searchResult: [],
     searchValue: "",
+    userMovieList: []
   },
   getters: {
     getUserId(state) {
@@ -54,6 +55,9 @@ export default createStore({
     getSearchValue(state) {
       return state.searchValue
     },
+    getUserMovieList(state){
+      return state.userMovieList
+    }
   },
   mutations: {
     setUserId(state,id) {
@@ -99,6 +103,9 @@ export default createStore({
     setSearchValue (state,value){
       // console.log(value)
       state.searchValue = value
+    },
+    setUserMovieList(state,value){
+      state.userMovieList = value
     }
   },
   actions: {
@@ -121,6 +128,21 @@ export default createStore({
         commit("setSearchResult",data.data.results)
       }catch(error){
         console.log(error)
+      }
+    },
+    async getUserInfo({commit}){
+      try {
+        const response = await axios.get("http://localhost:4444/auth/me", {
+          headers: {
+              accept: "application/json",
+              Authorization:
+                  "Bearer" + localStorage.getItem('token'),
+          },
+        })
+        console.log(response)
+        commit("setUserMovieList",response.data.movieList)
+      } catch (error) {
+        return error
       }
     },
     setUserId({commit},id){

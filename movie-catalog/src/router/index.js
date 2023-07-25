@@ -9,6 +9,7 @@ import Movie from "../views/Movies/Movies.vue";
 import PersonDetail from '../views/Person/PersonDetail.vue'
 import Profile from '../views/User/Profile.vue'
 import SearchResults from '../views/SearhResults/SearchResults.vue'
+import MyList from '../views/MyList/MyList.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,6 +54,11 @@ const router = createRouter({
           name: "searhResults",
           component: SearchResults
         },
+        {
+          path: "/my-list",
+          name: "myList",
+          component: MyList
+        }
       ],
     },
     {

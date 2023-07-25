@@ -24,6 +24,8 @@
         :movie="item"
         :key="item.id"
         :media_type="this.media_type"
+        :addMyListItem="this.addMyListItem"
+        :deleteListItem="this.deleteListItem"
       />
     </div>
     <button class="btn-carousel_popular right" @click="next">
@@ -43,6 +45,7 @@ import CardItem from "./CardItem.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { mapActions } from "vuex";
 import { ref } from "vue";
+import axios from 'axios';
 export default {
   setup() {
     const scrollRef = ref(null);
@@ -79,9 +82,9 @@ export default {
       media_type: "movie",
       options: [
         { id: 1, name: "Now Playing", value: "now_playing" },
-        { id: 1, name: "Top Rated", value: "top_rated" },
-        { id: 1, name: "Upcomming", value: "upcoming" },
-        { id: 2, name: "Popular", value: "popular" },
+        { id: 2, name: "Top Rated", value: "top_rated" },
+        { id: 3, name: "Upcomming", value: "upcoming" },
+        { id: 4, name: "Popular", value: "popular" },
       ],
     };
   },
@@ -102,6 +105,44 @@ export default {
       this.selectedOpitonMovie(name);
       this.getData();
     },
+    async addMyListItem(id) {
+      try {
+        const findItem = this.movies.filter(item => item.id === id)
+        console.log(findItem[0])
+        const userId = localStorage.getItem("userId")
+        const token = localStorage.getItem("token")
+        const request = await axios.patch(`http://localhost:4444/user/${userId}`, {
+          method: "PATCH",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          },
+          body: findItem[0]
+        })
+        console.log(request)
+
+      } catch (e) {
+        console.log(e.response.data.message)
+      }
+    },
+    async deleteListItem(id) {
+      try {
+        const findItem = this.movies.filter(item => item.id === id)
+        console.log(findItem[0])
+        const userId = localStorage.getItem("userId")
+        const token = localStorage.getItem("token")
+        const request = await axios.patch(`http://localhost:4444/deleteMovie/${userId}`, {
+          method: "PATCH",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          },
+          body: findItem[0].id
+        })
+        console.log(request)
+
+      } catch (e) {
+        console.log(e.response.data.message)
+      }
+    }
   },
   created() {
     this.getData();

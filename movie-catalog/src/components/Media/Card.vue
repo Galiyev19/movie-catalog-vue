@@ -10,7 +10,7 @@
                 <span class="text-white text-2xl">{{
                     Math.trunc(data.vote_average * 10) / 10
                 }} </span>
-                <font-awesome-icon icon="heart" class="text-4xl text-white icon hover:text-red-600 duration-300" />
+                <font-awesome-icon icon="heart" class="text-4xl icon hover:text-red-600 duration-300" />
             </div>
         </div>
     </router-link>
