@@ -15,13 +15,14 @@
           }}</span>
         </div>
         <div class="flex">
-          <font-awesome-icon icon="heart"
+          <!-- <font-awesome-icon icon="heart"
             :class="!this.$store.getters.getUserMovieList.find(item => item.id === movie.id) ? 'flex' : 'hidden'"
             class="text-4xl text-white icon" @click="this.addMyListItem(movie.id)" />
           <font-awesome-icon icon="trash"
             :class="this.$store.getters.getUserMovieList.find(item => item.id === movie.id) ? 'flex' : 'hidden'"
-            class="text-4xl text-white icon" @click="this.deleteListItem(movie.id)" />
-
+            class="text-4xl text-white icon" @click="this.deleteListItem(movie.id)" /> -->
+          <font-awesome-icon :icon="showBtn ? 'trash' : 'heart'" class="text-4xl text-white icon"
+            @click="addFav(movie.id)" />
         </div>
       </div>
     </div>
@@ -29,32 +30,47 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapActions } from "vuex";
-
 export default {
   name: "card-item",
   data() {
     return {
       url: "https://image.tmdb.org/t/p/original",
-      showBtn: false,
-      test: false
+      showBtn: null,
     };
   },
-  props: ["movie", "genres", "media_type", "addMyListItem", "deleteListItem"],
+  props: ["movie", "genres", "media_type", "addMyListItem", "deleteListItem", "myList"],
   methods: {
-    ...mapActions(["selectMovieId", "setMediaType"]),
+    ...mapActions(["selectMovieId", "setMediaType", "getUserInfo"]),
     onClickMoreDetail(id, media_type) {
       this.selectMovieId(id), this.setMediaType(media_type);
     },
-    isFav() {
-      this.test = !this.test
-      console.log(this.test)
-    }
+    addFav(id) {
+      this.showBtn = !this.showBtn
+      console.log(this.showBtn)
+
+      if (this.showBtn) {
+        console.log(1)
+        this.addMyListItem(id)
+      } else {
+        this.deleteListItem(id)
+        console.log(2)
+      }
+    },
+
   },
-  created() { },
+  mounted() {
+    this.showBtn = this.myList?.some(item => item.id === this.movie.id)
+
+  },
+  created() {
+    this.showBtn = this.myList?.some(item => item.id === this.movie.id)
+    console.log(this.myList)
+  },
   computed() {
-    this.isFav()
-    this.$store.getters.getUserMovieList
+    this.showBtn = this.myList?.some(item => item.id === this.movie.id)
+
   }
 };
 </script>

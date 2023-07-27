@@ -38,7 +38,6 @@ export default {
     },
     created() {
         this.getUserInfo()
-
     },
     computed() {
         this.getUserInfo()

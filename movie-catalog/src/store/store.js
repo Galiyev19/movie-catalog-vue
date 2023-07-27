@@ -16,7 +16,7 @@ export default createStore({
     showModalVideo: false,
     searchResult: [],
     searchValue: "",
-    userMovieList: []
+    userMovieList: [],
   },
   getters: {
     getUserId(state) {
@@ -124,7 +124,7 @@ export default createStore({
     async getSearchResult({commit},searchValue){
       try{
         const data = await apiMovies.searchData(searchValue)
-        console.log(data.data.results)
+        // console.log(data.data.results)
         commit("setSearchResult",data.data.results)
       }catch(error){
         console.log(error)
@@ -139,7 +139,7 @@ export default createStore({
                   "Bearer" + localStorage.getItem('token'),
           },
         })
-        console.log(response)
+        // console.log(response.data.movieList)
         commit("setUserMovieList",response.data.movieList)
       } catch (error) {
         return error

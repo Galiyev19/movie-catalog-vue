@@ -26,6 +26,7 @@
         :media_type="this.media_type"
         :addMyListItem="this.addMyListItem"
         :deleteListItem="this.deleteListItem"
+        :myList="this.myList"
       />
     </div>
     <button class="btn-carousel_popular right" @click="next">
@@ -80,16 +81,18 @@ export default {
       movies: [],
       genres: [],
       media_type: "movie",
+      isFav: false,
       options: [
         { id: 1, name: "Now Playing", value: "now_playing" },
         { id: 2, name: "Top Rated", value: "top_rated" },
         { id: 3, name: "Upcomming", value: "upcoming" },
         { id: 4, name: "Popular", value: "popular" },
       ],
+      myList: []
     };
   },
   methods: {
-    ...mapActions(["selectedOpitonMovie"]),
+    ...mapActions(["selectedOpitonMovie", "getUserInfo"]),
     async getData() {
       const res = await apiMovies.getPopulaMovie(
         this.$store.getters.selectedOptionMovie
@@ -108,7 +111,7 @@ export default {
     async addMyListItem(id) {
       try {
         const findItem = this.movies.filter(item => item.id === id)
-        console.log(findItem[0])
+        // console.log(findItem[0])
         const userId = localStorage.getItem("userId")
         const token = localStorage.getItem("token")
         const request = await axios.patch(`http://localhost:4444/user/${userId}`, {
@@ -142,13 +145,35 @@ export default {
       } catch (e) {
         console.log(e.response.data.message)
       }
+    },
+    async getInfo() {
+      try {
+        const response = await axios.get("http://localhost:4444/auth/me", {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer" + localStorage.getItem('token'),
+          },
+        })
+        console.log(response.data.movieList)
+        this.myList = response.data.movieList
+      } catch (e) {
+        console.log(e)
+      }
     }
   },
+  mounted() {
+    this.getInfo();
+  },
   created() {
+    this.getInfo();
     this.getData();
     this.getGenres();
   },
-};
+  computed() {
+    this.getInfo();
+  }
+}
 </script>
 <style scoped>
 .main {
