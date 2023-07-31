@@ -1,7 +1,7 @@
 <template>
     <div class="flex w-full flex-col">
         <div class="grid grid-cols-5 gap-5 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
-            <card v-for="item in this.data" :key="item.id" :data="item" />
+            <card v-for="item in this.data" :key="item.id" :data="item" :deleteListItem="this.deleteListItem" />
         </div>
         <div ref="observer"></div>
     </div>
@@ -9,6 +9,8 @@
 <script>
 import apiMovies from '../../api/api-movies';
 import Card from './Card.vue';
+import { mapActions } from 'vuex';
+import axios from 'axios';
 export default {
     name: 'grid-card',
     components: { Card },
@@ -19,12 +21,64 @@ export default {
         }
     },
     methods: {
+        ...mapActions(["getUserInfo", "deleteItemUserMovieList"]),
+        init() {
+            if (this.$route.params.name) {
+                this.getUserInfo()
+            }
+        },
+
         async getInfo() {
             this.page += 1
             const media_type = sessionStorage.getItem("media_type")
             const result = await apiMovies.getPopularMovieTv(media_type, this.page);
             this.data = [...this.data, ...result.results]
-        }
+        },
+        async addMyListItem(id) {
+            try {
+                this.deleteItemUserMovieList(id)
+
+                const findItem = this.data.filter(item => item.id === id)
+
+                const userId = localStorage.getItem("userId")
+                const token = localStorage.getItem("token")
+
+                const request = await axios.patch(`http://localhost:4444/user/${userId}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: findItem[0]
+                })
+
+
+                console.log("ITEM IS ADDED")
+                console.log(request)
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async deleteListItem(id) {
+            try {
+                const findItem = this.data.filter(item => item.id === id)
+
+                const userId = localStorage.getItem("userId")
+                const token = localStorage.getItem("token")
+
+                const request = await axios.patch(`http://localhost:4444/deleteMovie/${userId}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: findItem[0].id
+                })
+
+                console.log("ITEM IS DELETED")
+                console.log(request)
+            } catch (error) {
+                console.log(error.response)
+            }
+        },
     },
     mounted() {
         const options = {

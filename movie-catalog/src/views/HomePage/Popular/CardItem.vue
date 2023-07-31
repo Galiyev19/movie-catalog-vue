@@ -15,14 +15,8 @@
           }}</span>
         </div>
         <div class="flex">
-          <!-- <font-awesome-icon icon="heart"
-            :class="!this.$store.getters.getUserMovieList.find(item => item.id === movie.id) ? 'flex' : 'hidden'"
-            class="text-4xl text-white icon" @click="this.addMyListItem(movie.id)" />
-          <font-awesome-icon icon="trash"
-            :class="this.$store.getters.getUserMovieList.find(item => item.id === movie.id) ? 'flex' : 'hidden'"
-            class="text-4xl text-white icon" @click="this.deleteListItem(movie.id)" /> -->
-          <font-awesome-icon :icon="showBtn ? 'trash' : 'heart'" class="text-4xl text-white icon"
-            @click="addFav(movie.id)" />
+          <font-awesome-icon :icon="this.isFav ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark'"
+            class="text-4xl text-white cursor-pointer" @click="this.toogleAddFav(movie.id)" />
         </div>
       </div>
     </div>
@@ -37,41 +31,50 @@ export default {
   data() {
     return {
       url: "https://image.tmdb.org/t/p/original",
-      showBtn: null,
+      userMovie: [],
+      isFav: this.userMovie?.find(item => item.id === this.movie.id),
     };
   },
-  props: ["movie", "genres", "media_type", "addMyListItem", "deleteListItem", "myList"],
+  props: ["movie", "genres", "media_type", "addMyListItem", "deleteListItem",],
   methods: {
-    ...mapActions(["selectMovieId", "setMediaType", "getUserInfo"]),
+    ...mapActions(["selectMovieId", "setMediaType", "getUserInfo", "setIsFav",]),
     onClickMoreDetail(id, media_type) {
       this.selectMovieId(id), this.setMediaType(media_type);
     },
-    addFav(id) {
-      this.showBtn = !this.showBtn
-      console.log(this.showBtn)
 
-      if (this.showBtn) {
-        console.log(1)
+    toogleAddFav(id) {
+      this.isFav = !this.isFav
+
+
+      if (this.isFav) {
         this.addMyListItem(id)
       } else {
-        this.deleteListItem(id)
         console.log(2)
+        this.deleteListItem(id)
       }
     },
-
+    async getUserMovie() {
+      try {
+        const userId = localStorage.getItem("userId")
+        const response = await axios.get(`http://localhost:4444/getMovie/${userId}`)
+        this.userMovie = response.data
+        // console.log(response.data)
+      } catch (error) {
+        console.log(response)
+      }
+    },
   },
-  mounted() {
-    this.showBtn = this.myList?.some(item => item.id === this.movie.id)
+  computed() {
 
   },
   created() {
-    this.showBtn = this.myList?.some(item => item.id === this.movie.id)
-    console.log(this.myList)
+    this.fav = this.isFav
+    console.log(this.userMovie)
+    this.getUserMovie()
   },
-  computed() {
-    this.showBtn = this.myList?.some(item => item.id === this.movie.id)
+  mounted() {
 
-  }
+  },
 };
 </script>
 

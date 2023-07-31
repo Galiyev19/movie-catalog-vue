@@ -11,6 +11,7 @@
   <button class="btn-carousel left" @click="prevSlide">
     <font-awesome-icon icon="fa-solid fa-chevron-left" class="text-white text-5xl" />
   </button>
+
   <div class="popular">
     <div class="flex w-full justify-between items-end flex-wrap">
       <h2 class="text-8xl text-white max-[576px]:text-4xl font-montserrat">Featured Movie</h2>
@@ -20,6 +21,7 @@
     </div>
     <popular />
   </div>
+
   <div class="serials">
     <div class="flex w-full justify-between items-end flex-wrap">
       <h2 class="text-8xl text-white max-[992px]:text-4xl font-montserrat">TV Serials</h2>
@@ -50,10 +52,16 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getUserInfo"]),
+    ...mapActions(["getUserInfo", "getMovieCarousel"]),
+    init() {
+      if (this.$route.params.name === "/home") {
+        this.getUserInfo();
+
+      }
+    },
     async getData() {
       const res = await apiMovies.getNowPlayingMovie();
-      console.log(res);
+      // console.log(res);
       // const serials = await apiMovies.getTVSerials();
       // res.results.push(...serials.results);
       // console.log(res.results);
@@ -74,6 +82,15 @@ export default {
       this.setCurrentSlide(index);
     },
   },
+  watch: {
+    "$route.params.name": {
+      handler() {
+        this.init()
+      },
+      deep: true,
+      immediate: true,
+    }
+  },
   mounted() {
     this.slideInterval = setInterval(() => {
       const index =
@@ -85,13 +102,12 @@ export default {
     clearInterval(this.slideInterval);
   },
   created() {
-    this.getData(this.selectedOption);
     this.getUserInfo()
+    this.getData(this.selectedOption);
   },
   computed() {
-    this.getUserInfo()
   },
-  watch: {},
+
 };
 </script>
 <style>

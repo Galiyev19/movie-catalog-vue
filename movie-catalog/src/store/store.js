@@ -16,9 +16,17 @@ export default createStore({
     showModalVideo: false,
     searchResult: [],
     searchValue: "",
-    userMovieList: [],
+    userMovieList: null,
+    movieCarousel: [],
+    isFav: false
   },
   getters: {
+    getIsFav(state){
+      return state.isFav
+    },
+    getMovieCarousel(state){
+      return state.movieCarousel
+    },
     getUserId(state) {
       return state.userId
     },
@@ -57,7 +65,8 @@ export default createStore({
     },
     getUserMovieList(state){
       return state.userMovieList
-    }
+    },
+
   },
   mutations: {
     setUserId(state,id) {
@@ -106,9 +115,30 @@ export default createStore({
     },
     setUserMovieList(state,value){
       state.userMovieList = value
+    },
+    addMovieUserList(state,value){
+      state.userMovieList.push(value)
+    },
+    deleteItemUserMovieList(state,id){
+      state.userMovieList = state.userMovieList.filter(item => item.id !== id)
+    },
+    setMovieCarousel(state,value){
+      state.movieCarousel = [...value]
+    },
+    setIsFav(state,value){
+      state.isFav = value 
     }
   },
   actions: {
+    async getMovieCarousel({commit},optionName){
+    try {
+      const response = await apiMovies.getPopulaMovie(optionName)
+      // console.log(response.results)
+      commit("setMovieCarousel",response.results)
+    } catch (error) {
+      console.log(error)
+    }
+    },
     async getMovieDetail({commit}) {
       try{
         const id = sessionStorage.getItem("id")
@@ -139,11 +169,21 @@ export default createStore({
                   "Bearer" + localStorage.getItem('token'),
           },
         })
-        // console.log(response.data.movieList)
+        // console.log(response.data)
+
         commit("setUserMovieList",response.data.movieList)
       } catch (error) {
         return error
       }
+    },
+    setIsFav({commit},value){
+      commit("setIsFav",value)
+    },
+    addMovieUserList({commit},value){
+      commit("addMovieUserList",value)
+    },
+    deleteItemUserMovieList({commit},id){
+      commit("deleteItemUserMovieList",id)
     },
     setUserId({commit},id){
       console.log(id)

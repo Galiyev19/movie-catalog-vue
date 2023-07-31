@@ -9,7 +9,8 @@
       </button>
     </div>
     <div class="card_container scroll-smooth overflow-y-auto" id="serial_content" ref="scrollRef">
-      <card-item v-for="item in serials" :movie="item" :key="item.id" :media_type="this.media_type" />
+      <card-item v-for="item in serials" :movie="item" :key="item.id" :media_type="this.media_type"
+        :addMyListItem="this.addMyListItem" :deleteListItem="this.deleteListItem" />
     </div>
     <button class="text-white btn-carousel_serial right" @click="next">
       <font-awesome-icon icon="chevron-right" class="text-white font-montserrat text-8xl" />
@@ -24,6 +25,7 @@ import apiMovies from "../../../api/api-movies";
 import CardItem from "../Popular/CardItem.vue";
 import { mapActions } from "vuex";
 import { ref } from "vue";
+import axios from "axios";
 export default {
   name: "serials-slider",
   components: { CardItem },
@@ -75,6 +77,45 @@ export default {
     changeOption(name) {
       this.selectedOptionTV(name);
       this.getPopularSerials();
+    },
+    async addMyListItem(id) {
+      try {
+        const findItem = this.serials.filter(item => item.id === id)
+        // console.log(findItem[0])
+        const userId = localStorage.getItem("userId")
+        const token = localStorage.getItem("token")
+        const request = await axios.patch(`http://localhost:4444/user/${userId}`, {
+          method: "PATCH",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          },
+          body: findItem[0]
+        })
+        console.log("ITEM IS ADDED")
+        console.log(request)
+
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async deleteListItem(id) {
+      try {
+        const findItem = this.serials.filter(item => item.id === id)
+        console.log(findItem[0])
+        const userId = localStorage.getItem("userId")
+        const token = localStorage.getItem("token")
+        const request = await axios.patch(`http://localhost:4444/deleteMovie/${userId}`, {
+          method: "PATCH",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          },
+          body: findItem[0].id
+        })
+        console.log("ITEM IS DELETED")
+        console.log(request)
+      } catch (e) {
+        console.log(e)
+      }
     },
   },
   created() {

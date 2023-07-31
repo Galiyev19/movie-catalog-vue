@@ -20,13 +20,13 @@
       ref="scrollRef"
     >
       <card-item
-        v-for="item in movies"
+        v-for="item in this.$store.getters.getMovieCarousel"
         :movie="item"
         :key="item.id"
         :media_type="this.media_type"
         :addMyListItem="this.addMyListItem"
         :deleteListItem="this.deleteListItem"
-        :myList="this.myList"
+        :userMovie="this.userMovie.filter(fav => fav.id === item.id)" 
       />
     </div>
     <button class="btn-carousel_popular right" @click="next">
@@ -42,11 +42,11 @@
 </template>
 <script>
 import apiMovies from "@/api/api-movies";
-import CardItem from "./CardItem.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 import { ref } from "vue";
 import axios from 'axios';
+import CardItem from "./CardItem.vue";
 export default {
   setup() {
     const scrollRef = ref(null);
@@ -78,27 +78,24 @@ export default {
   components: { CardItem, Swiper, SwiperSlide },
   data() {
     return {
-      movies: [],
+      isFavorite: false,
+      movies: this.$store.getters.getMovieCarousel,
       genres: [],
+      myList: {},
       media_type: "movie",
-      isFav: false,
       options: [
         { id: 1, name: "Now Playing", value: "now_playing" },
         { id: 2, name: "Top Rated", value: "top_rated" },
         { id: 3, name: "Upcomming", value: "upcoming" },
         { id: 4, name: "Popular", value: "popular" },
       ],
-      myList: []
+      userMovie: []
     };
   },
   methods: {
-    ...mapActions(["selectedOpitonMovie", "getUserInfo"]),
+    ...mapActions(["selectedOpitonMovie", "getUserInfo", "getMovieCarousel"]),
     async getData() {
-      const res = await apiMovies.getPopulaMovie(
-        this.$store.getters.selectedOptionMovie
-      );
-      // console.log(res.results);
-      this.movies = res.results;
+      this.getMovieCarousel(this.$store.getters.selectedOptionMovie)
     },
     async getGenres() {
       const res = await apiMovies.getGenres();
@@ -110,7 +107,7 @@ export default {
     },
     async addMyListItem(id) {
       try {
-        const findItem = this.movies.filter(item => item.id === id)
+        const findItem = this.$store.getters.getMovieCarousel.filter(item => item.id === id)
         // console.log(findItem[0])
         const userId = localStorage.getItem("userId")
         const token = localStorage.getItem("token")
@@ -121,16 +118,16 @@ export default {
           },
           body: findItem[0]
         })
-        console.log(request)
-
+        console.log("ITEM IS ADDED")
+        console.log(findItem)
       } catch (e) {
-        console.log(e.response.data.message)
+        console.log(e.response)
       }
     },
     async deleteListItem(id) {
       try {
-        const findItem = this.movies.filter(item => item.id === id)
-        console.log(findItem[0])
+        const findItem = this.$store.getters.getMovieCarousel.filter(item => item.id === id)
+        // console.log(findItem[0])
         const userId = localStorage.getItem("userId")
         const token = localStorage.getItem("token")
         const request = await axios.patch(`http://localhost:4444/deleteMovie/${userId}`, {
@@ -140,39 +137,24 @@ export default {
           },
           body: findItem[0].id
         })
+        console.log("ITEM IS DELETED")
         console.log(request)
-
       } catch (e) {
-        console.log(e.response.data.message)
+        console.log(e.response)
       }
     },
-    async getInfo() {
-      try {
-        const response = await axios.get("http://localhost:4444/auth/me", {
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer" + localStorage.getItem('token'),
-          },
-        })
-        console.log(response.data.movieList)
-        this.myList = response.data.movieList
-      } catch (e) {
-        console.log(e)
-      }
-    }
+
   },
+  computed: { ...mapState(['userMovieList']) },
   mounted() {
-    this.getInfo();
+    this.getMovieCarousel(this.$store.getters.selectedOptionMovie)
   },
   created() {
-    this.getInfo();
+    this.getMovieCarousel(this.$store.getters.selectedOptionMovie)
     this.getData();
     this.getGenres();
+
   },
-  computed() {
-    this.getInfo();
-  }
 }
 </script>
 <style scoped>
