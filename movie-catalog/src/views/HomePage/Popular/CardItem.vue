@@ -16,7 +16,7 @@
         </div>
         <div class="flex">
           <font-awesome-icon :icon="this.isFav ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark'"
-            class="text-4xl text-white cursor-pointer" @click="this.toogleAddFav(movie.id)" />
+            class="text-4xl text-white cursor-pointer" @click="toogleAddMovie(this.movie.id)" />
         </div>
       </div>
     </div>
@@ -31,46 +31,56 @@ export default {
   data() {
     return {
       url: "https://image.tmdb.org/t/p/original",
-      userMovie: [],
-      isFav: this.userMovie?.find(item => item.id === this.movie.id),
+      isFav: false,
+      userMovieList: []
     };
   },
   props: ["movie", "genres", "media_type", "addMyListItem", "deleteListItem",],
   methods: {
-    ...mapActions(["selectMovieId", "setMediaType", "getUserInfo", "setIsFav",]),
+    ...mapActions(["selectMovieId", "setMediaType", "getUserInfo", "setIsFav", "setIsAdd"]),
     onClickMoreDetail(id, media_type) {
       this.selectMovieId(id), this.setMediaType(media_type);
     },
+    async getUser(id) {
+      const userId = localStorage.getItem("userId")
+      const token = localStorage.getItem("token")
+      const response = await axios(`http://localhost:4444/user-movie-list/${userId}`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      })
 
-    toogleAddFav(id) {
-      this.isFav = !this.isFav
+      this.isFav = response.data.some(item => item.id === id)
+    },
+    async toogleAddMovie(id) {
+      const userId = localStorage.getItem("userId")
+      const token = localStorage.getItem("token")
 
+      const userMovieList = await axios(`http://localhost:4444/user-movie-list/${userId}`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      })
 
-      if (this.isFav) {
-        this.addMyListItem(id)
-      } else {
-        console.log(2)
+      if (userMovieList.data?.some(item => item.id === id)) {
+        this.isFav = false
         this.deleteListItem(id)
+        console.log(2)
+      } else {
+        this.isFav = true
+        console.log(1)
+        this.addMyListItem(id)
+        this.setIsAdd(true)
       }
-    },
-    async getUserMovie() {
-      try {
-        const userId = localStorage.getItem("userId")
-        const response = await axios.get(`http://localhost:4444/getMovie/${userId}`)
-        this.userMovie = response.data
-        // console.log(response.data)
-      } catch (error) {
-        console.log(response)
-      }
-    },
+    }
   },
   computed() {
-
+    this.getUser(this.movie.id)
   },
   created() {
-    this.fav = this.isFav
-    console.log(this.userMovie)
-    this.getUserMovie()
+    this.getUser(this.movie.id)
   },
   mounted() {
 

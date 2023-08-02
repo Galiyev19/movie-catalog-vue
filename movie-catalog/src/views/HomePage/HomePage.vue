@@ -31,6 +31,7 @@
     </div>
     <serial-slider />
   </div>
+  <modal-add-movie-to-favorite v-if="this.$store.getters.getIsAdd" />
 </template>
 
 <script>
@@ -38,11 +39,12 @@ import apiMovies from "../../api/api-movies";
 import CarouselItem from "../TVSerials/CarouselItem.vue";
 import Popular from "./Popular/Popular.vue";
 import SerialSlider from "./SerialsSlider/SerialsSlider.vue";
+import ModalAddMovieToFavorite from "../../components/Modal/ModalAddMovieToFavorite.vue";
 import { mapActions } from 'vuex'
 
 export default {
   name: "Home",
-  components: { CarouselItem, Popular, SerialSlider },
+  components: { CarouselItem, Popular, SerialSlider, ModalAddMovieToFavorite },
   data() {
     return {
       currentSlide: 0,
@@ -52,11 +54,10 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getUserInfo", "getMovieCarousel"]),
+    ...mapActions(["getUserInfo", "getMovieCarousel", "setIsAdd"]),
     init() {
       if (this.$route.params.name === "/home") {
         this.getUserInfo();
-
       }
     },
     async getData() {
@@ -97,6 +98,7 @@ export default {
         this.currentSlide < this.data.length - 1 ? this.currentSlide + 1 : 0;
       this.setCurrentSlide(index);
     }, 10000);
+
   },
   beforeMount() {
     clearInterval(this.slideInterval);
@@ -106,6 +108,7 @@ export default {
     this.getData(this.selectedOption);
   },
   computed() {
+
   },
 
 };

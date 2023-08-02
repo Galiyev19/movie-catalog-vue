@@ -9,13 +9,15 @@
                 <span class="text-white text-2xl">{{
                     Math.trunc(data.vote_average * 10) / 10
                 }} </span>
-                <font-awesome-icon :icon="isFav ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark'"
-                    class="text-4xl text-white cursor-pointer" @click="this.toogleAddFav(data.id)" />
+                <font-awesome-icon
+                    :icon="this.$store.state.userMovieList?.some(item => item.id === this.data.id) || this.isFav ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark'"
+                    class="text-4xl text-white cursor-pointer" @click="toogleAddMovie(this.data.id)" />
             </div>
         </div>
     </div>
 </template>
 <script>
+import axios from 'axios';
 import { mapActions } from "vuex";
 export default {
     name: "card",
@@ -32,19 +34,26 @@ export default {
             const media_type = sessionStorage.getItem('media_type')
             this.selectMovieId(id), this.setMediaType(media_type);
         },
-        toogleAddFav(id) {
-            this.isFav = !this.isFav
-            console.log(this.showBtn)
+        async toogleAddMovie(id) {
+            const userId = localStorage.getItem("userId")
+            const token = localStorage.getItem("token")
 
-            if (this.isFav === true) {
-                this.addMyListItem(id)
-                console.log(this.data)
-                // this.addMovieUserList(this.data)
-            } else {
+            const userMovieList = await axios(`http://localhost:4444/user-movie-list/${userId}`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+
+            if (userMovieList.data?.some(item => item.id === id)) {
+                this.isFav = false
                 this.deleteListItem(id)
                 this.deleteItemUserMovieList(id)
+            } else {
+                this.isFav = true
+                this.addMyListItem(id)
             }
-        },
+        }
     },
 
 }

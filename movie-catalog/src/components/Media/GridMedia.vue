@@ -1,7 +1,8 @@
 <template>
     <div class="flex w-full flex-col">
-        <div class="grid grid-cols-5 gap-5 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
-            <card v-for="item in this.data" :key="item.id" :data="item" :deleteListItem="this.deleteListItem" />
+        <div class="grid grid-cols-7 gap-5 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
+            <card v-for="item in this.data" :key="item.id" :data="item" :deleteListItem="this.deleteListItem"
+                :addMyListItem="this.addMyListItem" />
         </div>
         <div ref="observer"></div>
     </div>
@@ -51,9 +52,6 @@ export default {
                     body: findItem[0]
                 })
 
-
-                console.log("ITEM IS ADDED")
-                console.log(request)
             } catch (error) {
                 console.log(error)
             }
@@ -73,8 +71,7 @@ export default {
                     body: findItem[0].id
                 })
 
-                console.log("ITEM IS DELETED")
-                console.log(request)
+
             } catch (error) {
                 console.log(error.response)
             }

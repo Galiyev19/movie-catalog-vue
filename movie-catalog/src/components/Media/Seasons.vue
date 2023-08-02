@@ -81,7 +81,6 @@ export default {
     computed() {
         this.getMovieDetail()
     },
-
 }
 </script>
 <style>

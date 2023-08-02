@@ -18,9 +18,13 @@ export default createStore({
     searchValue: "",
     userMovieList: null,
     movieCarousel: [],
-    isFav: false
+    isFav: false,
+    isAdd: false
   },
   getters: {
+    getIsAdd(state){
+      return state.isAdd
+    },
     getIsFav(state){
       return state.isFav
     },
@@ -66,7 +70,13 @@ export default createStore({
     getUserMovieList(state){
       return state.userMovieList
     },
-
+    getIsFav(state,id){
+      if(state.userMovieList?.find(item => item.id === id)){
+        return 1
+      }else{
+        return state.isFav
+      }
+    }
   },
   mutations: {
     setUserId(state,id) {
@@ -125,11 +135,25 @@ export default createStore({
     setMovieCarousel(state,value){
       state.movieCarousel = [...value]
     },
-    setIsFav(state,value){
-      state.isFav = value 
+    setIsFav(state,id){
+      const idx = state.movieCarousel.find(item => item.id === id)
+      if(idx){
+        console.log(idx)
+        // state.isFav = !state.isFav
+      }
+    },
+    setIsAdd(state,value){
+      state.isAdd = value
+      setTimeout(() => {
+        state.isAdd = false
+      },5000)
     }
+
   },
   actions: {
+    setIsAdd({commit},value){
+      commit("setIsAdd",value)
+    },
     async getMovieCarousel({commit},optionName){
     try {
       const response = await apiMovies.getPopulaMovie(optionName)

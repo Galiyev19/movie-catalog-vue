@@ -26,7 +26,6 @@
         :media_type="this.media_type"
         :addMyListItem="this.addMyListItem"
         :deleteListItem="this.deleteListItem"
-        :userMovie="this.userMovie.filter(fav => fav.id === item.id)" 
       />
     </div>
     <button class="btn-carousel_popular right" @click="next">
@@ -41,12 +40,13 @@
   </div>
 </template>
 <script>
-import apiMovies from "@/api/api-movies";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { mapActions, mapState } from "vuex";
-import { ref } from "vue";
 import axios from 'axios';
+import { ref } from "vue";
+import apiMovies from "@/api/api-movies";
+
+import { mapActions, mapState } from "vuex";
 import CardItem from "./CardItem.vue";
+import ModalAddMovieToFavorite from '../../../components/Modal/ModalAddMovieToFavorite.vue';
 export default {
   setup() {
     const scrollRef = ref(null);
@@ -75,10 +75,9 @@ export default {
     };
   },
   name: "popular",
-  components: { CardItem, Swiper, SwiperSlide },
+  components: { CardItem, ModalAddMovieToFavorite },
   data() {
     return {
-      isFavorite: false,
       movies: this.$store.getters.getMovieCarousel,
       genres: [],
       myList: {},
@@ -89,7 +88,7 @@ export default {
         { id: 3, name: "Upcomming", value: "upcoming" },
         { id: 4, name: "Popular", value: "popular" },
       ],
-      userMovie: []
+
     };
   },
   methods: {
@@ -118,8 +117,6 @@ export default {
           },
           body: findItem[0]
         })
-        console.log("ITEM IS ADDED")
-        console.log(findItem)
       } catch (e) {
         console.log(e.response)
       }
@@ -137,8 +134,7 @@ export default {
           },
           body: findItem[0].id
         })
-        console.log("ITEM IS DELETED")
-        console.log(request)
+
       } catch (e) {
         console.log(e.response)
       }
@@ -153,7 +149,7 @@ export default {
     this.getMovieCarousel(this.$store.getters.selectedOptionMovie)
     this.getData();
     this.getGenres();
-
+    this.getUserInfo()
   },
 }
 </script>

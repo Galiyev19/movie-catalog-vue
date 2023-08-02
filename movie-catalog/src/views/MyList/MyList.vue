@@ -1,8 +1,9 @@
 <template>
-    <div class="flex w-full- p-[124px] px-[3%]">
-        <div class="grid gap-4 grid-cols-4">
+    <div class="flex w-full h-screen p-[124px] px-[3%]">
+        <div class="h-full grid grid-cols-6 gap-5 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
             <card v-for="item in this.$store.getters.getUserMovieList" :key="item.id" :data="item"
-                :deleteListItem="this.deleteListItem" />
+                :deleteListItem="this.deleteListItem" :deleteItemUserMovieList="deleteItemUserMovieList" />
+            <h1 class="text-white text-6xl font-bold" v-if="this.$store.getters.getUserMovieList?.length <= 0">Empty</h1>
         </div>
     </div>
 </template>
@@ -26,7 +27,7 @@ export default {
         },
         async deleteListItem(id) {
             try {
-                console.log(this.data)
+
                 const findItem = this.data.filter(item => item.id === id)
                 console.log(findItem[0])
                 const userId = localStorage.getItem("userId")
@@ -36,21 +37,22 @@ export default {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     },
-                    body: findItem[0].id
+                    body: findItem[0]?.id
                 })
-                console.log("ITEM IS DELETED")
-                console.log(request)
             } catch (error) {
                 console.log(error)
             }
         },
     },
     created() {
-        // this.getUserInfo()
+        this.getUserInfo()
     },
     computed() {
-        // this.getUserInfo()
-    }
+        this.getUserInfo()
+    },
+    mounted() {
+        this.getUserInfo()
+    },
 }
 </script>
 <style></style>
