@@ -66,7 +66,7 @@ export default {
           password: this.password
         }
 
-        const request = await axios.post("http://localhost:4444/sign-up", data)
+        const request = await axios.post(`${procces.env.VUE_APP_API_URL}/sign-up`, data)
         console.log(request)
         this.setUserId(request.data.id)
         localStorage.setItem("userId", request.data._id)

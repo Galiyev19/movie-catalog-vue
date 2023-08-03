@@ -48,7 +48,7 @@ export default {
   name: "header",
   data() {
     return {
-      url: "http://localhost:4444/uploads/",
+      url: `${procces.env.VUE_APP_API_URL}/uploads/`,
       search: "",
       data: null
     }
@@ -57,7 +57,7 @@ export default {
     ...mapActions(['setSearchValue', 'getSearchResult']),
     async getUserData() {
       try {
-        const response = await axios.get("http://localhost:4444/auth/me", {
+        const response = await axios.get(`${procces.env.VUE_APP_API_URL}/auth/me`, {
           headers: {
             accept: "application/json",
             Authorization:
