@@ -127,7 +127,7 @@ export default {
         // console.log(findItem[0])
         const userId = localStorage.getItem("userId")
         const token = localStorage.getItem("token")
-        const request = await axios.patch(`http://localhost:4444/deleteMovie/${userId}`, {
+        await axios.patch(`http://localhost:4444/deleteMovie/${userId}`, {
           method: "PATCH",
           headers: {
             "Authorization": `Bearer ${token}`

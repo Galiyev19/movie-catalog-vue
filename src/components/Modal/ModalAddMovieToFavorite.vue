@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed right-[3%] top-[5%] rounded-xl  bg-slate-700 p-6 text-center text-white"
+    <div class="fixed z-20 right-[3%] top-[8%] rounded-xl  bg-slate-700 p-6 text-center text-white"
         :class="this.$store.state.isAdd === false ? 'hidden' : 'flex'">
         <div :class="this.$store.state.isAdd === true ? 'transform-x-0' : 'modal_add_movie_in_my_list'">
             <h2 class="text-3xl">Movie is add in your list</h2>

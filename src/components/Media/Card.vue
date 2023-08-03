@@ -1,7 +1,7 @@
 <template>
-    <div class="flex flex-col cursor-pointer hover:opacity-70 duration-300" @click="onClickMoreDetail(data.id)">
-        <router-link class=" flex object-cover" :to="`/home/${data.original_title || data.name}`">
-            <img :src="url + data.poster_path" />
+    <div class="flex flex-col cursor-pointer hover:opacity-70 duration-300">
+        <router-link class=" flex object-cover" :to="`/home/${data.title || data.name}`">
+            <img :src="url + data.poster_path" @click="onClickMoreDetail(data.id)" />
         </router-link>
         <div class="flex flex-col w-full py-4">
             <h2 class="text-white text-3xl font-bold">{{ data.original_title || data.name }}</h2>

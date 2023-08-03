@@ -65,6 +65,7 @@ export default {
   },
   computed() {
     this.getMovies()
+    sessionStorage.setItem('media_type', 'movie')
   },
 };
 </script>

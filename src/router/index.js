@@ -74,6 +74,9 @@ const router = createRouter({
       meta: { requiresAuth: false } 
     },
   ],
+  scrollBehavior() {
+    document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
+}
 });
 
 

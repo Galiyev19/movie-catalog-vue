@@ -135,6 +135,7 @@ export default {
 .person_info {
     display: flex;
     width: 100%;
+
     align-items: start;
     justify-content: center;
     padding: 5rem 0px;

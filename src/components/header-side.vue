@@ -22,7 +22,8 @@
       </router-link>
     </div>
     <div class=" user_info" @click="toggleMenu">
-      <font-awesome-icon icon="user" class="text-white text-3xl" />
+      <font-awesome-icon icon="user" class="text-white text-3xl" v-if="this.data?.avatarUrl === undefined" />
+      <img :src="this.url + data?.avatarUrl" v-else class="logo rounded-full" />
       <div class="user_menu_block" id="user_menu">
         <ul class="user_menu">
           <router-link to="/profile" class="user_menu_item font-montserrat"><font-awesome-icon icon="user" class="mr-2" />
@@ -40,17 +41,35 @@
 </template>
 
 <script>
+import axios from 'axios'
 import apiMovies from '../api/api-movies'
 import { mapActions } from 'vuex'
 export default {
   name: "header",
   data() {
     return {
-      search: ""
+      url: "http://localhost:4444/uploads/",
+      search: "",
+      data: null
     }
   },
   methods: {
     ...mapActions(['setSearchValue', 'getSearchResult']),
+    async getUserData() {
+      try {
+        const response = await axios.get("http://localhost:4444/auth/me", {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer" + localStorage.getItem('token'),
+          },
+        })
+        console.log(response.data)
+        this.data = response.data
+      } catch (e) {
+        console.log(e)
+      }
+    },
     toggleMenu() {
       let menu = document.getElementById("user_menu")
       menu.classList.toggle("open_menu")
@@ -70,10 +89,15 @@ export default {
   computed() {
     this.inputSearch()
     this.search
+    this.getUserData()
   },
   mounted() {
     this.inputSearch()
     this.search
+    this.getUserData()
+  },
+  created() {
+    this.getUserData()
   },
 }
 </script>

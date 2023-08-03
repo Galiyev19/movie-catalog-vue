@@ -18,10 +18,14 @@ export default createStore({
     searchValue: "",
     userMovieList: null,
     movieCarousel: [],
+    trendingAll: [],
     isFav: false,
     isAdd: false
   },
   getters: {
+    getTredingAll(state){
+      return state.trendingAll;
+    },
     getIsAdd(state){
       return state.isAdd
     },
@@ -76,7 +80,7 @@ export default createStore({
       }else{
         return state.isFav
       }
-    }
+    },
   },
   mutations: {
     setUserId(state,id) {
@@ -147,12 +151,23 @@ export default createStore({
       setTimeout(() => {
         state.isAdd = false
       },5000)
+    },
+    setTrendingAll(state,data){
+      state.trendingAll = [...data]
     }
-
   },
   actions: {
     setIsAdd({commit},value){
       commit("setIsAdd",value)
+    },
+    async getTredingAll({commit}){
+      try {
+        const response = await apiMovies.getNowPlayingMovie()
+         console.log(response.results)
+        commit("setTrendingAll",response.results)
+      } catch (error) {
+        
+      }
     },
     async getMovieCarousel({commit},optionName){
     try {

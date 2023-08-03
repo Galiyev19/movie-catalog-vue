@@ -1,8 +1,8 @@
 <template>
   <div class="carousel">
     <div class="container_slider">
-      <carousel-item v-for="(item, index) in data" :movie="item" :key="`item-${index}`" :current-slide="currentSlide"
-        :index="index" />
+      <carousel-item v-for="(item, index) in this.$store.getters.getTredingAll" :movie="item" :key="item.id"
+        :current-slide="currentSlide" :index="index" :addMyList="addMyList" :deleteMovie="deleteMovie" />
     </div>
   </div>
   <button class="btn-carousel right" @click="nextSlide">
@@ -54,51 +54,37 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getUserInfo", "getMovieCarousel", "setIsAdd"]),
-    init() {
-      if (this.$route.params.name === "/home") {
-        this.getUserInfo();
-      }
+    ...mapActions(["getUserInfo", "getMovieCarousel", "setIsAdd", 'getTredingAll']),
+    async addMyList(data) {
+      const response = await apiMovies.addMovieUserList(data)
+      console.log(response)
+    },
+    async deleteMovie(data) {
+      await apiMovies.deleteMovieInUserList(data);
     },
     async getData() {
       const res = await apiMovies.getNowPlayingMovie();
-      // console.log(res);
-      // const serials = await apiMovies.getTVSerials();
-      // res.results.push(...serials.results);
-      // console.log(res.results);
-      // this.data = res.results.sort(() => Math.random() - 0.5);
+      console.log(res.results)
       this.data = res?.results;
     },
     setCurrentSlide(index) {
       this.currentSlide = index;
     },
     prevSlide() {
-      const index =
-        this.currentSlide > 0 ? this.currentSlide - 1 : this.data.length - 1;
+      const index = this.currentSlide > 0 ? this.currentSlide - 1 : this.data.length - 1;
       this.setCurrentSlide(index);
     },
     nextSlide() {
-      const index =
-        this.currentSlide < this.data.length - 1 ? this.currentSlide + 1 : 0;
+      const index = this.currentSlide < this.data.length - 1 ? this.currentSlide + 1 : 0;
       this.setCurrentSlide(index);
     },
   },
-  watch: {
-    "$route.params.name": {
-      handler() {
-        this.init()
-      },
-      deep: true,
-      immediate: true,
-    }
-  },
   mounted() {
     this.slideInterval = setInterval(() => {
-      const index =
-        this.currentSlide < this.data.length - 1 ? this.currentSlide + 1 : 0;
+      const index = this.currentSlide < this.data.length - 1 ? this.currentSlide + 1 : 0;
       this.setCurrentSlide(index);
     }, 10000);
-
+    this.getTredingAll()
   },
   beforeMount() {
     clearInterval(this.slideInterval);
@@ -106,9 +92,10 @@ export default {
   created() {
     this.getUserInfo()
     this.getData(this.selectedOption);
+    this.getTredingAll()
   },
   computed() {
-
+    this.getTredingAll()
   },
 
 };
@@ -141,8 +128,8 @@ body {
 .container_slider {
   width: 100%;
   height: 100%;
-  position: relative;
-  overflow: hidden;
+  /* position: relative;
+  overflow: hidden; */
 }
 
 .btn-carousel {

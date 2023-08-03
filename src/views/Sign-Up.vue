@@ -69,7 +69,7 @@ export default {
         const request = await axios.post("http://localhost:4444/sign-up", data)
         console.log(request)
         this.setUserId(request.data.id)
-        localStorage.setItem("userId", response.data._id)
+        localStorage.setItem("userId", request.data._id)
         localStorage.setItem("token", request.data.token);
         localStorage.setItem("isAuth", true)
         this.$router.push("/home")

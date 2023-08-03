@@ -1,3 +1,4 @@
+import axios from "axios";
 import API from "./axios";
 
 const options = {
@@ -167,6 +168,32 @@ const apiMovies = {
       return error
     }
   },
+  addMovieUserList: async(data) => {
+    try{
+      console.log(data)
+      const userId = localStorage.getItem('userId')
+      await axios.patch(`http://localhost:4444/user/${userId}`,{
+        method: "PATCH",
+        body: data
+      })
+    }catch(error){
+      return error
+    }
+  },
+  deleteMovieInUserList: async(data) => {
+    try {
+      const userId = localStorage.getItem("userId");
+      await axios.patch(`http://localhost:4444/deleteMovie/${userId}`, {
+        method: "PATCH",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        },
+        body: data
+      })
+    } catch (error) {
+      return error
+    }
+  }
 };
 
 export default apiMovies;
