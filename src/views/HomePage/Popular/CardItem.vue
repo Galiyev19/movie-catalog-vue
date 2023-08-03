@@ -26,6 +26,7 @@
 <script>
 import axios from 'axios';
 import { mapActions } from "vuex";
+import apiMovies from '../../../api/api-movies';
 export default {
   name: "card-item",
   data() {
