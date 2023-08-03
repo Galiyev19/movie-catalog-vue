@@ -60,7 +60,7 @@ export default {
           email: this.email,
           password: this.password
         }
-        const response = await axios.post(`${procces.env.VUE_APP_API_URL}/sign-in`, data)
+        const response = await axios.post(`${process.env.VUE_APP_API_URL}/sign-in`, data)
         console.log(response.data)
         this.setUserId(response.data.id)
         localStorage.setItem("userId", response.data._id)

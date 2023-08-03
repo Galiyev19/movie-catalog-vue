@@ -53,7 +53,7 @@ export default {
     methods: {
         async getUserData() {
             try {
-                const response = await axios.get(`${procces.env.VUE_APP_API_URL}/auth/me`, {
+                const response = await axios.get(`${process.env.VUE_APP_API_URL}/auth/me`, {
                     headers: {
                         accept: "application/json",
                         Authorization:
@@ -74,7 +74,7 @@ export default {
                 const file = event.target.files[0]
                 formData.append("image", file);
 
-                const response = await axios.post(`${procces.env.VUE_APP_API_URL}/upload/${userId}`, formData)
+                const response = await axios.post(`${process.env.VUE_APP_API_URL}/upload/${userId}`, formData)
                 console.log(response.data)
 
             } catch (error) {

@@ -44,7 +44,7 @@ export default {
     async getUser(id) {
       const userId = localStorage.getItem("userId")
       const token = localStorage.getItem("token")
-      const response = await axios(`http://localhost:4444/user-movie-list/${userId}`, {
+      const response = await axios(`${process.env.VUE_APP_API_URL}/user-movie-list/${userId}`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`
@@ -57,7 +57,7 @@ export default {
       const userId = localStorage.getItem("userId")
       const token = localStorage.getItem("token")
 
-      const userMovieList = await axios(`http://localhost:4444/user-movie-list/${userId}`, {
+      const userMovieList = await axios(`${process.env.VUE_APP_API_URL}/user-movie-list/${userId}`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`

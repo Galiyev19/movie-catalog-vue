@@ -201,7 +201,7 @@ export default createStore({
     },
     async getUserInfo({commit}){
       try {
-        const response = await axios.get(`${procces.env.VUE_APP_API_URL}/auth/me`, {
+        const response = await axios.get(`${process.env.VUE_APP_API_URL}/auth/me`, {
           headers: {
               accept: "application/json",
               Authorization:
