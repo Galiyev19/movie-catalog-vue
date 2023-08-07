@@ -78,7 +78,7 @@ export default {
   components: { CardItem, ModalAddMovieToFavorite },
   data() {
     return {
-      movies: this.$store.getters.getMovieCarousel,
+      movies: {},
       genres: [],
       myList: {},
       media_type: "movie",
@@ -144,19 +144,15 @@ export default {
 
   },
   computed() {
-    this.getMovieCarousel(this.$store.getters.selectedOptionMovie);
     this.getData()
   },
   mounted() {
-    this.getMovieCarousel(this.$store.getters.selectedOptionMovie);
     this.getData()
   },
   created() {
-    this.getMovieCarousel(this.$store.getters.selectedOptionMovie)
     this.getGenres();
     this.getUserInfo();
     this.getData()
-    console.log(this.movies)
   },
 }
 </script>

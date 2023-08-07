@@ -1,6 +1,6 @@
 <template>
   <div class="main_movie_detail" :style="`background-image:linear-gradient(rgba(32, 32, 32, 0.5), rgb(32, 32, 32) 100%), 
-  url(${url + this.$store.getters.getMovieDetail?.backdrop_path || url + this.$store.getters.getMovieDetail?.poster_path
+  url(${url + this.$store.getters.getMovieDetail.backdrop_path || url + this.$store.getters.getMovieDetail.poster_path
     }) `">
     <!-- /**
   * ! Backround movie

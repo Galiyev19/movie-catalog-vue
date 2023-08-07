@@ -136,8 +136,8 @@ export default createStore({
     deleteItemUserMovieList(state,id){
       state.userMovieList = state.userMovieList.filter(item => item.id !== id)
     },
-    setMovieCarousel(state,value){
-      state.movieCarousel = [...value]
+    setMovieCarousel(state, data){
+      state.movieCarousel = data
     },
     setIsFav(state,id){
       const idx = state.movieCarousel.find(item => item.id === id)
