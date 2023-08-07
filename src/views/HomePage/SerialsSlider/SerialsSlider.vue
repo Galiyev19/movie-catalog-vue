@@ -9,7 +9,7 @@
       </button>
     </div>
     <div class="card_container scroll-smooth overflow-y-auto" id="serial_content" ref="scrollRef">
-      <card-item v-for="item in serials" :movie="item" :key="item.id" :media_type="this.media_type"
+      <card-item v-for="item in serials?.results" :movie="item" :key="item.id" :media_type="this.media_type"
         :addMyListItem="this.addMyListItem" :deleteListItem="this.deleteListItem" />
     </div>
     <button class="text-white btn-carousel_serial right" @click="next">
@@ -72,7 +72,7 @@ export default {
         this.$store.getters.selectedOptionTV
       );
       // console.log(result.results);
-      this.serials = result.results;
+      this.serials = result;
     },
     changeOption(name) {
       this.selectedOptionTV(name);

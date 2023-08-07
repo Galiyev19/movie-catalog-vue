@@ -156,6 +156,7 @@ export default {
     this.getGenres();
     this.getUserInfo();
     this.getData()
+    console.log(this.movies)
   },
 }
 </script>
