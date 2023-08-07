@@ -66,7 +66,7 @@ export default {
           password: this.password
         }
 
-        const request = await axios.post(`${process.env.VUE_APP_API_URL}/sign-up`, data)
+        const request = await axios.post(`https://server-movie-catalog.onrender.com/sign-up`, data)
         console.log(request)
         this.setUserId(request.data.id)
         localStorage.setItem("userId", request.data._id)

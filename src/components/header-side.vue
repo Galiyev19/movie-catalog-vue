@@ -48,7 +48,7 @@ export default {
   name: "header",
   data() {
     return {
-      url: `${process.env.VUE_APP_API_URL}/uploads/`,
+      url: `https://server-movie-catalog.onrender.com/uploads/`,
       search: "",
       data: null
     }
@@ -57,7 +57,7 @@ export default {
     ...mapActions(['setSearchValue', 'getSearchResult']),
     async getUserData() {
       try {
-        const response = await axios.get(`${process.env.VUE_APP_API_URL}/auth/me`, {
+        const response = await axios.get(`https://server-movie-catalog.onrender.com/auth/me`, {
           headers: {
             accept: "application/json",
             Authorization:

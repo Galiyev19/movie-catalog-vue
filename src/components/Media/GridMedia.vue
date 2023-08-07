@@ -44,7 +44,7 @@ export default {
                 const userId = localStorage.getItem("userId")
                 const token = localStorage.getItem("token")
 
-                const request = await axios.patch(`${process.env.VUE_APP_API_URL}/user/${userId}`, {
+                const request = await axios.patch(`https://server-movie-catalog.onrender.com/user/${userId}`, {
                     method: "PATCH",
                     headers: {
                         "Authorization": `Bearer ${token}`
@@ -63,7 +63,7 @@ export default {
                 const userId = localStorage.getItem("userId")
                 const token = localStorage.getItem("token")
 
-                const request = await axios.patch(`${process.env.VUE_APP_API_URL}/deleteMovie/${userId}`, {
+                const request = await axios.patch(`https://server-movie-catalog.onrender.com/deleteMovie/${userId}`, {
                     method: "PATCH",
                     headers: {
                         "Authorization": `Bearer ${token}`

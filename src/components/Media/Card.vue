@@ -38,7 +38,7 @@ export default {
             const userId = localStorage.getItem("userId")
             const token = localStorage.getItem("token")
 
-            const userMovieList = await axios(`${process.env.VUE_APP_API_URL}/user-movie-list/${userId}`, {
+            const userMovieList = await axios(`https://server-movie-catalog.onrender.com/user-movie-list/${userId}`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`

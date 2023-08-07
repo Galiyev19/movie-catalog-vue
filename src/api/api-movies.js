@@ -172,7 +172,7 @@ const apiMovies = {
     try{
       console.log(data)
       const userId = localStorage.getItem('userId')
-      await axios.patch(`${process.env.VUE_APP_API_URL}/user/${userId}`,{
+      await axios.patch(`https://server-movie-catalog.onrender.com//user/${userId}`,{
         method: "PATCH",
         body: data
       })
@@ -183,7 +183,7 @@ const apiMovies = {
   deleteMovieInUserList: async(data) => {
     try {
       const userId = localStorage.getItem("userId");
-      await axios.patch(`${process.env.VUE_APP_API_URL}/deleteMovie/${userId}`, {
+      await axios.patch(`https://server-movie-catalog.onrender.com/deleteMovie/${userId}`, {
         method: "PATCH",
         headers: {
           "Authorization": `Bearer ${token}`
