@@ -101,8 +101,8 @@ export default {
       this.genres = res;
     },
     changeOption(name) {
-      this.selectedOpitonMovie(name);
       this.getData();
+      this.selectedOpitonMovie(name);
     },
     async addMyListItem(id) {
       try {
