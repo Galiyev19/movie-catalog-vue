@@ -173,7 +173,7 @@ export default createStore({
     try {
       const response = await apiMovies.getPopulaMovie(optionName)
       console.log(response.results)
-      commit("setMovieCarousel",response?.results)
+      commit("setMovieCarousel",response)
     } catch (error) {
       console.log(error)
     }

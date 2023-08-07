@@ -44,8 +44,8 @@ import axios from 'axios';
 import { ref } from "vue";
 import apiMovies from "@/api/api-movies";
 
-import { mapActions, mapState } from "vuex";
-import CardItem from "./CardItem.vue";
+import { mapActions } from "vuex";
+import CardItem from './CardItem.vue';
 import ModalAddMovieToFavorite from '../../../components/Modal/ModalAddMovieToFavorite.vue';
 export default {
   setup() {
