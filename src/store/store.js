@@ -128,7 +128,7 @@ export default createStore({
       state.searchValue = value
     },
     setUserMovieList(state,value){
-      state.userMovieList = value
+      state.userMovieList = [...value]
     },
     addMovieUserList(state,value){
       state.userMovieList.push(value)
