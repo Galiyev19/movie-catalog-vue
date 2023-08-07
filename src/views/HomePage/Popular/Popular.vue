@@ -141,7 +141,9 @@ export default {
     },
 
   },
-  computed: { ...mapState(['userMovieList']) },
+  computed() {
+    this.getMovieCarousel(this.$store.getters.selectedOptionMovie)
+  },
   mounted() {
     this.getMovieCarousel(this.$store.getters.selectedOptionMovie)
   },
