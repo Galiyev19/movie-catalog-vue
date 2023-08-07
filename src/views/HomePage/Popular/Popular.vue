@@ -94,7 +94,8 @@ export default {
   methods: {
     ...mapActions(["selectedOpitonMovie", "getUserInfo", "getMovieCarousel"]),
     async getData() {
-      const response = await apiMovies.getMovieCarousel(this.$store.getters.selectedOptionMovie)
+      const response = await apiMovies.getPopulaMovie(this.$store.getters.selectedOptionMovie)
+      console.log(response)
       this.movies = response.results
     },
     async getGenres() {
