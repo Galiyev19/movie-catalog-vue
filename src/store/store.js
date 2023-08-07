@@ -164,7 +164,7 @@ export default createStore({
       try {
         const response = await apiMovies.getNowPlayingMovie()
          console.log(response.results)
-        commit("setTrendingAll",response.results)
+        commit("setTrendingAll",response?.results)
       } catch (error) {
         
       }
@@ -172,8 +172,8 @@ export default createStore({
     async getMovieCarousel({commit},optionName){
     try {
       const response = await apiMovies.getPopulaMovie(optionName)
-      // console.log(response.results)
-      commit("setMovieCarousel",response.results)
+      console.log(response.results)
+      commit("setMovieCarousel",response?.results)
     } catch (error) {
       console.log(error)
     }
@@ -194,7 +194,7 @@ export default createStore({
       try{
         const data = await apiMovies.searchData(searchValue)
         // console.log(data.data.results)
-        commit("setSearchResult",data.data.results)
+        commit("setSearchResult",data.data?.results)
       }catch(error){
         console.log(error)
       }
@@ -210,7 +210,7 @@ export default createStore({
         })
         // console.log(response.data)
 
-        commit("setUserMovieList",response.data.movieList)
+        commit("setUserMovieList",response.data?.movieList)
       } catch (error) {
         return error
       }
