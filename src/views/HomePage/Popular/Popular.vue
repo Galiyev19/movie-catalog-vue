@@ -20,7 +20,7 @@
       ref="scrollRef"
     >
       <card-item
-        v-for="item in movies"
+        v-for="item in movies?.results"
         :movie="item"
         :key="item.id"
         :media_type="this.media_type"
@@ -96,7 +96,7 @@ export default {
     async getData() {
       const response = await apiMovies.getPopulaMovie(this.$store.getters.selectedOptionMovie)
       console.log(response)
-      this.movies = response.results
+      this.movies = response
     },
     async getGenres() {
       const res = await apiMovies.getGenres();
