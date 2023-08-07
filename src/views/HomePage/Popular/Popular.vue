@@ -111,7 +111,7 @@ export default {
         const userId = localStorage.getItem("userId")
         const token = localStorage.getItem("token")
         const request = await axios.patch(`https://server-movie-catalog.onrender.com/user/${userId}`, {
-          method: "PATCH", process
+          method: "PATCH",
           headers: {
             "Authorization": `Bearer ${token}`
           },
