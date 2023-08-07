@@ -20,7 +20,7 @@
       ref="scrollRef"
     >
       <card-item
-        v-for="item in this.$store.getters.getMovieCarousel"
+        v-for="item in movies"
         :movie="item"
         :key="item.id"
         :media_type="this.media_type"
@@ -94,7 +94,8 @@ export default {
   methods: {
     ...mapActions(["selectedOpitonMovie", "getUserInfo", "getMovieCarousel"]),
     async getData() {
-      this.getMovieCarousel(this.$store.getters.selectedOptionMovie)
+      const response = await apiMovies.getMovieCarousel(this.$store.getters.selectedOptionMovie)
+      this.movies = response.results
     },
     async getGenres() {
       const res = await apiMovies.getGenres();
@@ -142,16 +143,18 @@ export default {
 
   },
   computed() {
-    this.getMovieCarousel(this.$store.getters.selectedOptionMovie)
+    this.getMovieCarousel(this.$store.getters.selectedOptionMovie);
+    this.getData()
   },
   mounted() {
-    this.getMovieCarousel(this.$store.getters.selectedOptionMovie)
+    this.getMovieCarousel(this.$store.getters.selectedOptionMovie);
+    this.getData()
   },
   created() {
     this.getMovieCarousel(this.$store.getters.selectedOptionMovie)
-    this.getData();
     this.getGenres();
-    this.getUserInfo()
+    this.getUserInfo();
+    this.getData()
   },
 }
 </script>
